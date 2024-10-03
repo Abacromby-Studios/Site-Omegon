@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dept of Regulations & Ethics Committee BoD Office 1</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+        #terminal {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #cursor {
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        #scp-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .typed {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00ff00;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
+        }
+    </style>
+</head>
+<body>
+    <svg id="scp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="r" from="0" to="45" dur="2s" begin="0s" fill="freeze" />
+        </circle>
+        <path d="M30 40 Q50 20 70 40 Q50 60 30 40" fill="none" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="d" from="M50 50 Q50 50 50 50 Q50 50 50 50" to="M30 40 Q50 20 70 40 Q50 60 30 40" dur="2s" begin="0s" fill="freeze" />
+        </path>
+        <path d="M30 60 Q50 80 70 60" fill="none" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="d" from="M50 60 Q50 60 50 60" to="M30 60 Q50 80 70 60" dur="2s" begin="0s" fill="freeze" />
+        </path>
+    </svg>
+    <div id="terminal"></div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const text = `                                SCP FOUNDATION
+
+——————————————————————————————————————————————————————————————
+
+
+
+
+
+
+                                                                                                > boot
+
+SCP-EPO Booting up
+
+.
+
+.
+
+.
+
+Terminal booted
+
+ 
+
+                                                                                                > login BoD.DORAC.The_Law_Bringer
+
+LOGGING IN…
+
+PLEASE ENTER PASSWORD.
+
+     
+
+                                                                                                > pass EC.ED.delta.omicron.redrum.Kilo-67.1739                                                            
+
+
+
+
+
+LOGGING IN…
+
+Welcome Dept Regulations & Ethics Committee, Board of Director, "The Law Bringer"
+
+YOU HAVE NO NEW NOTIFICATION(S)
+
+`;
+
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                terminal.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeText, Math.random() * 50 + 10);
+            } else {
+                terminal.innerHTML += '<span id="cursor">█</span>';
+            }
+        }
+
+        typeText();
+    </script>
+</body>
+</html>
