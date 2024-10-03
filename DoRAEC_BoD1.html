@@ -73,7 +73,7 @@
     </style>
 </head>
 <body>
-    <img id="scp-logo" src="https://cdn.discordapp.com/attachments/1289269250451832954/1291375501117489343/output-onlinepngtools.png?ex=66ffdea8&is=66fe8d28&hm=c602f6c79350319d5ede974594990c8710d2cf5486aea09762354d840ffc55cb&" alt="SCP Logo" style="opacity: 0;">
+    <img id="scp-logo" src="YOUR_UPDATED_IMAGE_URL_HERE" alt="SCP Logo" style="opacity: 0;">
     <div id="terminal-container">
         <div id="terminal"></div>
     </div>
@@ -151,7 +151,38 @@ YOU HAVE NO NEW NOTIFICATION(S)
             }
         }
 
-        animateLogo();
+        // Check if the image loads successfully
+        logo.onload = function() {
+            console.log("Image loaded successfully");
+            animateLogo();
+        };
+
+        // If there's an error loading the image, log it and try to create a fallback
+        logo.onerror = function() {
+            console.error("Error loading image");
+            createFallbackLogo();
+        };
+
+        function createFallbackLogo() {
+            const svgLogo = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgLogo.setAttribute("id", "scp-logo");
+            svgLogo.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgLogo.setAttribute("viewBox", "0 0 100 100");
+            svgLogo.innerHTML = `
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="r" from="0" to="45" dur="2s" begin="0s" fill="freeze" />
+                </circle>
+                <path d="M30 40 Q50 20 70 40 Q50 60 30 40" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 50 Q50 50 50 50 Q50 50 50 50" to="M30 40 Q50 20 70 40 Q50 60 30 40" dur="2s" begin="0s" fill="freeze" />
+                </path>
+                <path d="M30 60 Q50 80 70 60" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 60 Q50 60 50 60" to="M30 60 Q50 80 70 60" dur="2s" begin="0s" fill="freeze" />
+                </path>
+            `;
+            logo.parentNode.replaceChild(svgLogo, logo);
+            animateLogo();
+        }
+
         typeText();
     </script>
 </body>
