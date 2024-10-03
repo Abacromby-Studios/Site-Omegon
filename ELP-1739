@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            display: block;
+            margin: 10px 0;
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
 
+    <script>
+        const users = {
+            // MTF users
+            MTF_A-1_Op_Crab: { password: 'Mobile Task Force Alpha-1_Operative Crab', redirect: 'https://sites.google.com/view/site-omegon/mtf-alpha-1-dashboard' },
+            MTF_E-11_Sr_Op_Ensign: { password: 'Mobile Task Force Epsilion-11 Senior Operative Ensign', redirect: 'https://sites.google.com/view/site-omegon/mtf-epsilon-11-dashboard' },
+            MTFuser3: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            MTFuser125: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+
+            // FSD users
+            FSDuser1: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            FSDuser2: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            FSDuser3: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            // ... Add all 125 FSD users here
+            FSDuser125: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+
+            // DoRAEC users
+            DoRAEC_BoD_Comic: { password: 'Department of Regulation And Ethics Committre Board of Directors Comic', redirect: 'https://sites.google.com/view/site-omegon/DoRAEC_BoD_001' },
+            DoRAECuser2: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            DoRAECuser3: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            // ... Add all 50 DoRAEC users here
+            DoRAECuser50: { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+
+            // O5 users
+            'O5-2': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-3': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-4': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-5': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-6': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-7': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-8': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-9': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-10': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-11': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-12': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+            'O5-13': { password: 'password', redirect: 'https://sites.google.com/view/site-omegon/' },
+        },
+        // ...ISD users
+        'ISDLeadSuprvsr_Zuhhttv': { password: 'Internal Security Department Lead Supervisor Zuhhttv', redirect: 'https://sites.google.com/view/site-omegon/ISD-001-002-Dashboard' },
+        'ISDLeadAgent_Silent': { password: 'Internal Security Department Lead Agent Silent', redirect: 'https//sites.google.com/view/site-omegon/ISD-001-002-Dashboard' },
+
+        // ... OOTA SECRETARY User(s)
+        'TAs_OOTA_Secretary': { password: 'The Administrators Office of The Administrator Secretary', redirect: 'https://sites.google.com/view/site-omegon/AD-OOTA-food35-1739' };
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username].password === password) {
+                alert('Credentials authorized, redirecting to the epo');
+                // Redirect to the user-specific URL
+                window.location.href = users[username].redirect;
+            } else {
+                alert('Invalid credentials. Please try again. If this persists email us at site.omegon.website.dev@tidio.xyz in order to reset password or request a reminder.');
+            }
+        });
+    </script>
+</body>
+</html>
