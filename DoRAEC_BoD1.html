@@ -11,7 +11,15 @@
             font-family: 'Courier New', monospace;
             padding: 20px;
             line-height: 1.6;
-            overflow: hidden;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #terminal-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 20px;
         }
         #terminal {
             white-space: pre-wrap;
@@ -45,24 +53,35 @@
             from, to { border-color: transparent }
             50% { border-color: #00ff00; }
         }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Customizing scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #001100;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
     </style>
 </head>
 <body>
-    <svg id="scp-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#00ff00" stroke-width="2">
-            <animate attributeName="r" from="0" to="45" dur="2s" begin="0s" fill="freeze" />
-        </circle>
-        <path d="M30 40 Q50 20 70 40 Q50 60 30 40" fill="none" stroke="#00ff00" stroke-width="2">
-            <animate attributeName="d" from="M50 50 Q50 50 50 50 Q50 50 50 50" to="M30 40 Q50 20 70 40 Q50 60 30 40" dur="2s" begin="0s" fill="freeze" />
-        </path>
-        <path d="M30 60 Q50 80 70 60" fill="none" stroke="#00ff00" stroke-width="2">
-            <animate attributeName="d" from="M50 60 Q50 60 50 60" to="M30 60 Q50 80 70 60" dur="2s" begin="0s" fill="freeze" />
-        </path>
-    </svg>
-    <div id="terminal"></div>
+    <img id="scp-logo" src="https://cdn.discordapp.com/attachments/1289269250451832954/1291375501117489343/output-onlinepngtools.png" alt="SCP Logo" style="opacity: 0;">
+    <div id="terminal-container">
+        <div id="terminal"></div>
+    </div>
 
     <script>
         const terminal = document.getElementById('terminal');
+        const terminalContainer = document.getElementById('terminal-container');
+        const logo = document.getElementById('scp-logo');
         const text = `                                SCP FOUNDATION
 
 ——————————————————————————————————————————————————————————————
@@ -110,16 +129,29 @@ YOU HAVE NO NEW NOTIFICATION(S)
 
         let index = 0;
 
+        function animateLogo() {
+            let opacity = 0;
+            const intervalId = setInterval(() => {
+                opacity += 0.1;
+                logo.style.opacity = opacity;
+                if (opacity >= 1) {
+                    clearInterval(intervalId);
+                }
+            }, 100);
+        }
+
         function typeText() {
             if (index < text.length) {
                 terminal.innerHTML += text.charAt(index);
                 index++;
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
                 setTimeout(typeText, Math.random() * 50 + 10);
             } else {
                 terminal.innerHTML += '<span id="cursor">█</span>';
             }
         }
 
+        animateLogo();
         typeText();
     </script>
 </body>
