@@ -1,1 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dept of Regulations & Ethics Committee BoD Office 1</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            line-height: 1.6;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        #terminal-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+        #terminal {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #cursor {
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        #scp-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .typed {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00ff00;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Customizing scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #001100;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+    </style>
+</head>
+<body>
+    <img id="scp-logo" src="https://cdn.discordapp.com/attachments/1289269250451832954/1291375501117489343/output-onlinepngtools.png?ex=66ffdea8&is=66fe8d28&hm=c602f6c79350319d5ede974594990c8710d2cf5486aea09762354d840ffc55cb&" alt="SCP Logo" style="opacity: 0;">
+    <div id="terminal-container">
+        <div id="terminal"></div>
+    </div>
 
+    <script>
+        const terminal = document.getElementById('terminal');
+        const terminalContainer = document.getElementById('terminal-container');
+        const logo = document.getElementById('scp-logo');
+        const text = `                                                 SCP FOUNDATION
+
+————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+
+
+
+
+
+                                                                                                > boot
+
+SCP-EPO Booting up
+
+.
+
+.
+
+.
+
+Terminal booted
+
+ 
+
+                                                        > login BoD.DORAC.The_Law_Bringer
+
+LOGGING IN…
+
+PLEASE ENTER PASSWORD.
+
+     
+
+                                           > pass EC.ED.delta.omicron.redrum.Kilo-67.1739                                                            
+
+
+
+
+
+LOGGING IN…
+
+Welcome Dept Regulations & Ethics Committee, Board of Director, "The Law Bringer"
+
+YOU HAVE NO NEW NOTIFICATION(S)
+
+`;
+
+        let index = 0;
+
+        function animateLogo() {
+            let opacity = 0;
+            const intervalId = setInterval(() => {
+                opacity += 0.1;
+                logo.style.opacity = opacity;
+                if (opacity >= 1) {
+                    clearInterval(intervalId);
+                }
+            }, 100);
+        }
+
+        function typeText() {
+            if (index < text.length) {
+                terminal.innerHTML += text.charAt(index);
+                index++;
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
+                setTimeout(typeText, Math.random() * 50 + 10);
+            } else {
+                terminal.innerHTML += '<span id="cursor">█</span>';
+            }
+        }
+
+        // Check if the image loads successfully
+        logo.onload = function() {
+            console.log("Image loaded successfully");
+            animateLogo();
+        };
+
+        // If there's an error loading the image, log it and try to create a fallback
+        logo.onerror = function() {
+            console.error("Error loading image");
+            createFallbackLogo();
+        };
+
+        function createFallbackLogo() {
+            const svgLogo = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgLogo.setAttribute("id", "scp-logo");
+            svgLogo.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgLogo.setAttribute("viewBox", "0 0 100 100");
+            svgLogo.innerHTML = `
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="r" from="0" to="45" dur="2s" begin="0s" fill="freeze" />
+                </circle>
+                <path d="M30 40 Q50 20 70 40 Q50 60 30 40" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 50 Q50 50 50 50 Q50 50 50 50" to="M30 40 Q50 20 70 40 Q50 60 30 40" dur="2s" begin="0s" fill="freeze" />
+                </path>
+                <path d="M30 60 Q50 80 70 60" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 60 Q50 60 50 60" to="M30 60 Q50 80 70 60" dur="2s" begin="0s" fill="freeze" />
+                </path>
+            `;
+            logo.parentNode.replaceChild(svgLogo, logo);
+            animateLogo();
+        }
+
+        typeText();
+    </script>
+</body>
+</html>
