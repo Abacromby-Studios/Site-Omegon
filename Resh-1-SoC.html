@@ -1,0 +1,111 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTF Resh 1 Terminal</title>
+  <style>
+    /* Terminal-style font and colors */
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: black;
+      color: #00ff00;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Crest image */
+    .crest {
+      display: block;
+      margin: 20px auto;
+      width: 333px;
+      height: 187px;
+      background-image: url('https://th.bing.com/th?id=OIP.fsF3HkR3QZnGeVoN8larRQHaEK&w=333&h=187&c=8&rs=1&qlt=90&r=0&o=6&dpr=1.5&pid=3.1&rm=2');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* Terminal animation */
+    .terminal {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #00ff00;
+      box-shadow: 0 0 20px 0 #00ff00;
+      animation: terminal-glow 2s infinite alternate;
+    }
+
+    @keyframes terminal-glow {
+      0% {
+        box-shadow: 0 0 20px 0 #00ff00;
+      }
+      100% {
+        box-shadow: 0 0 40px 0 #00ff00;
+      }
+    }
+
+    .terminal pre {
+      margin: 0;
+      white-space: pre-wrap;
+      animation: terminal-text 0.5s infinite alternate, typing 4s steps(20) infinite;
+    }
+
+    @keyframes terminal-text {
+      0% {
+        color: #00ff00;
+      }
+      100% {
+        color: #0080ff;
+      }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="crest"></div>
+  <div class="terminal">
+    <pre>
+                                                  SCP FOUNDATION
+
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+
+
+
+
+                                                                                                > boot
+SCP-EPO Booting up
+.
+.
+.
+Terminal booted
+
+ 
+                                                                             > login Resh_one.MobileTaskForce.Seat.of.Consciousness 
+LOGGING IN
+.
+.
+.
+
+PLEASE ENTER PASSWORD.
+     
+                                                                    > pass Romeo.Echo.Charlie.Helios.One.SoC.Head_Heart_Stomach 
+
+
+
+LOGGING IN…
+
+Welcome Mobile Task Force Resh-1 ("Seat of Consciousness")
+
+YOU HAVE NO NEW NOTIFICATION(S)
+
+    </pre>
+  </div>
+</body>
+</html>
