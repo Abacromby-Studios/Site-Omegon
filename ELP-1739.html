@@ -112,13 +112,14 @@
                 window.location.href = users[username].redirect;
             } else {
                 loginAttempts++;
-                const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining) if you need to request a password reset feel free to email our Web Development Team at scpf.site.omegon.web.dev@tidio.xyz for assistance.`;
+            const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts + 1} attempts remaining)`;
                 errorMessage.style.display = 'block';
 
                 if (loginAttempts >= maxAttempts) {
-                    alert('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
+                    alert('Maximum login attempts reached. Standby whist automated systems contact the Internal Security Department and R.A.I.S.A');
                     window.location.href = redirectUrl;
+                }
                     
                     //This file was created and coded by Abacromby230, the Chief Executive Officer of Abacromby Studios, and project lead for ARAC S-O
                 }
