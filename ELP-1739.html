@@ -74,7 +74,7 @@
                 window.location.href = users[username].redirect;
             } else {
                 loginAttempts++;
-                const errorMessage = document.getElementById('error-message');
+                const error-message = document.getElementById('error-message');
                 errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
                 errorMessage.style.display = 'block';
 
