@@ -113,7 +113,7 @@
             } else {
                 loginAttempts++;
                 const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
+                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining) if you need to request a password reset feel free to email our Web Development Team at scpf.site.omegon.web.dev@tidio.xyz for assistance.`;
                 errorMessage.style.display = 'block';
 
                 if (loginAttempts >= maxAttempts) {
