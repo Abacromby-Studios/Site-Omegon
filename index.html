@@ -3,11 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> A.R.A.C Site - Omegon | Roblox Experience</title>
+    <title>A.R.A.C Site - Omegon | Roblox Experience</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Request permission to show notifications
+        async function requestNotificationPermission() {
+            try {
+                // Check if the Notification API is supported
+                if (Notification.permission !== 'granted') {
+                    await Notification.requestPermission();
+                }
+                console.log("Notification permission granted.");
+            } catch (error) {
+                console.error("Failed to request notification permission:", error);
+            }
+        }
+
+        // Request permission to redirect the user
+        async function requestRedirectPermission() {
+            try {
+                // Check if the Permissions API is supported
+                if (navigator.permissions) {
+                    await navigator.permissions.query({ name: 'navigation' });
+                    console.log("Redirect permission granted.");
+                } else {
+                    // Fallback for browsers without the Permissions API
+                    console.log("Redirect permission not supported.");
+                }
+            } catch (error) {
+                console.error("Failed to request redirect permission:", error);
+            }
+        }
+
+        // Example usage
+        requestNotificationPermission();
+        requestRedirectPermission();
+    </script>
 </head>
-<body>
     <header>
         <nav>
             <div class="logo">Armed Research & Containment Site-Omegon</div>
