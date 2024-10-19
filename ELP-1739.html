@@ -74,11 +74,11 @@
                 window.location.href = users[username].redirect;
             } else {
                 loginAttempts++;
-                const error-message = document.getElementById('error-message');
-                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
+                        const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts + 1} attempts remaining) if in need of assistance in regards to resetting your password, email:`;
                 errorMessage.style.display = 'block';
 
-                if (loginAttempts == maxAttempts) {
+                if (loginAttempts >= maxAttempts) {
                     alert('Maximum login attempts reached. Standby whist automated systems contact the Internal Security Department and R.A.I.S.A');
                     window.location.href = redirectUrl;
                 }
