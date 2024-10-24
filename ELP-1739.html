@@ -108,8 +108,8 @@
     const password = document.getElementById('password').value;
 
     if (users[username] && users[username].password === password) {
-        window.alert('Credentials authorized, redirecting to the epo');
-        window.location.href = users[username].redirect;
+        alert('Credentials authorized, redirecting to the epo');
+        window.open(users[username].redirect, '_self');
     } else {
         loginAttempts++;
         const errorMessage = document.getElementById('error-message');
@@ -117,8 +117,8 @@
         errorMessage.style.display = 'block';
 
         if (loginAttempts >= maxAttempts) {
-            window.alert('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
-            window.location.href = redirectUrl;
+            alert('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
+            window.open(redirectUrl, '_self');
         }
     }
 });
