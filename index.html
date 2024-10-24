@@ -3,3 +3,102 @@
     ERROR 9001: SERVER OUTAGE FOR MAINTENANCE.
 
     
+// ...<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A.R.A.C Site - Omegon | Roblox Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Request permission to show notifications
+        async function requestNotificationPermission() {
+            try {
+                // Check if the Notification API is supported
+                if (Notification.permission !== 'granted') {
+                    await Notification.requestPermission();
+                }
+                console.log("Notification permission granted.");
+            } catch (error) {
+                console.error("Failed to request notification permission:", error);
+            }
+        }
+
+        // Request permission to redirect the user
+        async function requestRedirectPermission() {
+            try {
+                // Check if the Permissions API is supported
+                if (navigator.permissions) {
+                    await navigator.permissions.query({ name: 'navigation' });
+                    console.log("Redirect permission granted.");
+                } else {
+                    // Fallback for browsers without the Permissions API
+                    console.log("Redirect permission not supported.");
+                }
+            } catch (error) {
+                console.error("Failed to request redirect permission:", error);
+            }
+        }
+
+        // Example usage
+        requestNotificationPermission();
+        requestRedirectPermission();
+    </script>
+</head>
+    <header>
+        <nav>
+            <div class="logo">Armed Research & Containment Site-Omegon</div>
+            <ul>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="ELP-1739.html" class="login-button">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h1>Welcome to Armed Research & Containment Site-Omegon</h1>
+            <p>join, get trained, do your job, HAVE A FUN TIME!</p>
+            <a href="#" class="cta-button">Play Now</a>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Armed Research & Containment Site - Omegon</h2>
+            <p>Armed Research & Containment Site - Omegon is an immersive Roblox experience based on the popular SCP Foundation universe. Dive into a world of anomalies, containment procedures, and supernatural phenomena, or get trained and become the best in your field</p>
+        </section>
+
+        <section id="features" class="features">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Explore the facility</li>
+                <li>Interact with various SCPs</li>
+                <li>Engage in thrilling missions and tasks as a Mobile Task Force Operative</li>
+                <li>Collaborate with other personnel to contain breaches</li>
+                <li>Regular updates with new content</li>
+                <li>Active Community</li>
+                <li>XBOX ONLY</li>
+                <li>Professional Roleplays</li>
+                <li>Mature Game Moderation Team members</li>
+            </ul>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or suggestions regarding the website? Reach out to us!</p>
+            <a href="scpf.site.omegon.web.dev@tidio.xyz" class="contact-button">Email our Website Developers</a>
+
+            <p>Have questions or suggestions regarding the Game? Reach out to us!</p>
+            <a href="scpf.site.omegon.game.dev@tidio.xyz" class="contact-button">Email our Game Developers</a>
+
+            <p>Have legal requests? Reach out to us!</p>
+            <a href="legal.site.omegon@tidio.xyz" class="contact-button">Email our Legal Team</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Abacromby Studios. All rights reserved. Developed, maintained, and operated by Abacromby230 in the United States</p>
+    </footer>
+</body>
+</html>
