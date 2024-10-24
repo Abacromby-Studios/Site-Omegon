@@ -103,28 +103,27 @@
         const redirectUrl = 'https://testurl.com/';
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-            if (users[username] && users[username].password === password) {
-                alert('Credentials authorized, redirecting to the epo');
-                window.location.href = users[username].redirect;
-            } else {
-                loginAttempts++;
-            const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts + 1} attempts remaining)`;
-                errorMessage.style.display = 'block';
+    if (users[username] && users[username].password === password) {
+        alert('Credentials authorized, redirecting to the epo');
+        setTimeout(() => {
+            window.location.replace(users[username].redirect);
+        }, 1000);
+    } else {
+        loginAttempts++;
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
+        errorMessage.style.display = 'block';
 
-                if (loginAttempts >= maxAttempts) {
-                    alert('Maximum login attempts reached. Standby whist automated systems contact the Internal Security Department and R.A.I.S.A');
-                    window.location.href = redirectUrl;
-                }
-                    
-                    //This file was created and coded by Abacromby230, the Chief Executive Officer of Abacromby Studios, and project lead for ARAC S-O
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+        if (loginAttempts >= maxAttempts) {
+            alert('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
+            setTimeout(() => {
+                window.location.replace(redirectUrl);
+            }, 1000);
+        }
+    }
+    return false;
+});
