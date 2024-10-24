@@ -102,16 +102,14 @@
         const maxAttempts = 4;
         const redirectUrl = 'https://testurl.com/';
 
-     document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
     if (users[username] && users[username].password === password) {
-        const confirmed = window.confirm('Credentials authorized, redirecting to the epo');
-        if (confirmed) {
-            window.location.replace(users[username].redirect);
-        }
+        window.alert('Credentials authorized, redirecting to the epo');
+        window.location.href = users[username].redirect;
     } else {
         loginAttempts++;
         const errorMessage = document.getElementById('error-message');
@@ -119,11 +117,8 @@
         errorMessage.style.display = 'block';
 
         if (loginAttempts >= maxAttempts) {
-            const confirmed = window.confirm('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
-            if (confirmed) {
-                window.location.replace(redirectUrl);
-            }
+            window.alert('Maximum login attempts reached. Standby for a directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
+            window.location.href = redirectUrl;
         }
     }
-    return false;
 });
