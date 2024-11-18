@@ -101,19 +101,24 @@
         const maxAttempts = 4;
         const redirectUrl = 'https://testurl.com/';
 
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
+ document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('error-message');
 
     if (users[username] && users[username].password === password) {
         alert('Credentials authorized, redirecting to the epo');
         window.open(users[username].redirect, '_self');
     } else {
         loginAttempts++;
-        const errorMessage = document.getElementById('error-message');
         errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
         errorMessage.style.display = 'block';
+        
+        // Add timeout to hide the error message after 5 seconds
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 5000);
 
         if (loginAttempts >= maxAttempts) {
             alert('Maximum login attempts reached. Standby for directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
