@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    // Add this at the start of your script to verify the form is found
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('error-message');
+    let loginAttempts = 0;
+    const maxAttempts = 4;
+
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('Form submitted'); // Debug line
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (users[username] && users[username].password === password) {
+            alert('Credentials authorized, redirecting to the epo');
+            window.open(users[username].redirect, '_self');
+        } else {
+            loginAttempts++;
+            console.log('Invalid login attempt:', loginAttempts); // Debug line
+            
+            errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
+            errorMessage.style.display = 'block';
+            errorMessage.style.opacity = '1';
+
+            if (loginAttempts >= maxAttempts) {
+                alert('Maximum login attempts reached. Standby for directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
+                window.open(redirectUrl, '_self');
+            }
+        }
+    });
+});
+
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foundation OS Login Page</title>
@@ -101,28 +135,6 @@
         const maxAttempts = 4;
         const redirectUrl = 'https://testurl.com/';
 
- document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('error-message');
-
-    if (users[username] && users[username].password === password) {
-        alert('Credentials authorized, redirecting to the epo');
-        window.open(users[username].redirect, '_self');
-    } else {
-        loginAttempts++;
-        errorMessage.textContent = `Error code: 401 - Invalid credentials (${maxAttempts - loginAttempts} attempts remaining)`;
-        errorMessage.style.display = 'block';
-        
-        // Add timeout to hide the error message after 5 seconds
-        setTimeout(() => {
-            errorMessage.style.display = 'none';
-        }, 5000);
-
-        if (loginAttempts >= maxAttempts) {
-            alert('Maximum login attempts reached. Standby for directions whilst we are contacting the Internal Security Department & R.A.I.S.A');
-            window.open(redirectUrl, '_self');
         }
     }
 });
