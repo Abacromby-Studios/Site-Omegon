@@ -57,7 +57,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* Customizing scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -70,63 +69,61 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #00cc00;
         }
+        .digital-button {
+            background-color: #001100;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 15px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 300px;
+            margin: 20px auto;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+        .digital-button:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 15px #00ff00;
+        }
     </style>
 </head>
 <body>
     <img id="scp-logo" src="https://cdn.discordapp.com/attachments/1289269250451832954/1297262110610559026/saygex.png?ex=671548fd&is=6713f77d&hm=74cf47be16049ed044ff8bfe1915a43641d828a64df4c0805119de560a0eb6d6&" alt="SCP Logo" style="opacity: 0;">
     <div id="terminal-container">
         <div id="terminal"></div>
+        <button class="digital-button" onclick="window.location.href='https://abacromby-studios.github.io/Site-Omegon/L-5-Dashboard'">Access L-5 Main Dashboard</button>
     </div>
-
     <script>
         const terminal = document.getElementById('terminal');
         const terminalContainer = document.getElementById('terminal-container');
         const logo = document.getElementById('scp-logo');
         const text = `                                                 SCP FOUNDATION
-
 ————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-
-
-
-
-
-
                                                                                                 > boot
-
 SCP-EPO Booting up
-
 .
-
 .
-
 .
-
 Terminal booted
-
  
-
                                                     > login Beta_Seven.MobileTaskForce.maz.hatters 
 LOGGING IN
 .
 .
 .
-
 PLEASE ENTER PASSWORD.
      
                                      > pass Bravo.Echo.Tango.Alpha.Seven.MH 
-
-
-
 LOGGING IN…
-
 Welcome Mobile Task Force Beta-7 ("Maz Hatters")
-
 YOU HAVE NO NEW NOTIFICATION(S)
-
 `;
-
         let index = 0;
-
         function animateLogo() {
             let opacity = 0;
             const intervalId = setInterval(() => {
@@ -137,7 +134,6 @@ YOU HAVE NO NEW NOTIFICATION(S)
                 }
             }, 100);
         }
-
         function typeText() {
             if (index < text.length) {
                 terminal.innerHTML += text.charAt(index);
@@ -148,19 +144,14 @@ YOU HAVE NO NEW NOTIFICATION(S)
                 terminal.innerHTML += '<span id="cursor">█</span>';
             }
         }
-
-        // Check if the image loads successfully
         logo.onload = function() {
             console.log("Image loaded successfully");
             animateLogo();
         };
-
-        // If there's an error loading the image, log it and try to create a fallback
         logo.onerror = function() {
             console.error("Error loading image");
             createFallbackLogo();
         };
-
         function createFallbackLogo() {
             const svgLogo = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svgLogo.setAttribute("id", "scp-logo");
@@ -180,7 +171,6 @@ YOU HAVE NO NEW NOTIFICATION(S)
             logo.parentNode.replaceChild(svgLogo, logo);
             animateLogo();
         }
-
         typeText();
     </script>
 </body>
