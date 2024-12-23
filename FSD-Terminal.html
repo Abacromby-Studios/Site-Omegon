@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FSD Terminal Dashboard</title>
+    <style>
+        body {
+            background: #000;
+            font-family: "Courier New", monospace;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: powerOn 1s ease-in forwards;
+            animation-delay: 0.5s;
+        }
+
+        .logo img {
+            width: 200px;
+        }
+
+        .terminal {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            background: rgba(0, 20, 0, 0.9);
+        }
+
+        .command-line {
+            margin: 10px 0;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes powerOn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .typed-text {
+            overflow: hidden;
+            white-space: pre-wrap;
+            border-right: 2px solid #00ff00;
+            animation: typing 3s steps(40, end);
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        .status {
+            color: #ff0000;
+            margin: 10px 0;
+        }
+
+        .welcome-message {
+            color: #ffff00;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .notifications {
+            color: #ff6600;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="https://cdn.discordapp.com/attachments/1303447019268079628/1320703350387376228/output-onlinepngtools_upscayl_4x_realesrgan-x4plus-anime.png" alt="FSD Logo">
+    </div>
+    <div class="terminal" id="terminal">
+    </div>
+
+    <script>
+        const terminalText = [
+            "> boot",
+            "SCP-EPO Booting up",
+            ".",
+            ".",
+            ".",
+            "Terminal booted",
+            "",
+            "> login FSD_Facility_Security_Department_Dark_Crimson-White?",
+            "LOGGING IN",
+            ".",
+            ".",
+            ".",
+            "PLEASE ENTER PASSWORD.",
+            "> pass Foxtrot.Sierra.Delta.Delta.Charlie.Whiskey.1739.313.731",
+            "LOGGING IN…",
+            "",
+            "Welcome Armed Research & Containment Site - Omegon Facility Security Department",
+            "",
+            "YOU HAVE NO NEW NOTIFICATION(S)"
+        ];
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function typeText() {
+            const terminal = document.getElementById('terminal');
+            
+            for (let line of terminalText) {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'command-line';
+                terminal.appendChild(lineDiv);
+
+                if (line === "") {
+                    await sleep(500);
+                    continue;
+                }
+
+                for (let char of line) {
+                    lineDiv.textContent += char;
+                    await sleep(50);
+                }
+                await sleep(200);
+            }
+        }
+
+        window.onload = typeText;
+    </script>
+</body>
+</html>
