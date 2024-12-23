@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
     <script>
-        // Request permission to show notifications
         async function requestNotificationPermission() {
             try {
-                // Check if the Notification API is supported
                 if (Notification.permission !== 'granted') {
                     await Notification.requestPermission();
                 }
@@ -21,15 +19,12 @@
             }
         }
 
-        // Request permission to redirect the user
         async function requestRedirectPermission() {
             try {
-                // Check if the Permissions API is supported
                 if (navigator.permissions) {
                     await navigator.permissions.query({ name: 'navigation' });
                     console.log("Redirect permission granted.");
                 } else {
-                    // Fallback for browsers without the Permissions API
                     console.log("Redirect permission not supported.");
                 }
             } catch (error) {
@@ -37,17 +32,20 @@
             }
         }
 
-        // Example usage
         requestNotificationPermission();
         requestRedirectPermission();
     </script>
 </head>
+<body>
     <header>
         <nav>
             <div class="logo">Armed Research & Containment Site-Omegon</div>
             <ul>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="ELP-1739.html" class="login-button">Login</a></li>
+                <li><a href="PLP-L-2.html" class="login-button">Login L-2</a></li>
+                <li><a href="PLP-L-3.html" class="login-button">Login L-3</a></li>
+                <li><a href="PLP-L-4.html" class="login-button">Login L-4</a></li>
+                <li><a href="PLP-L-5.html" class="login-button">Login L-5</a></li>
             </ul>
         </nav>
     </header>
@@ -93,7 +91,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Abacromby Studios. All rights reserved. Developed, maintained, and operated by Abacromby230 in the United States</p>
+        <p>&copy; 2024-2025 Abacromby Studios. All rights reserved. Developed, maintained, and operated by Abacromby230 in the United States</p>
     </footer>
 </body>
 </html>
