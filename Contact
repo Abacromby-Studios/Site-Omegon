@@ -81,16 +81,18 @@
                 <span class="email">scpf.site.omegon.human.resources@tidio.xyz/span>
             </div>
             <div class="email-card">
-                <span class="email">test@test.com</span>
+                <span class="email">scpf.site.omegon.human.resources@tidio.xyz</span>
             </div>
             <div class="email-card">
-                <span class="email">test@test.com</span>
+                <span class="email">site.omegon.game.development.team@tidio.xyz</span>
             </div>
             <div class="email-card">
-                <span class="email">test@test.com</span>
+                <span class="email">scpf.site.omegon.game.support@tidio.xyz</span>
             </div>
             <div class="email-card">
                 <span class="email"legal.site.omegon@tidio.xyz</span>
+            <div class="email-card">
+                <span class="email"site.omegon.bot.development.team@tidio.xyz>/span>
             </div>
         </div>
     </div>
