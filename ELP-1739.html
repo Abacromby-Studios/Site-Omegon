@@ -30,7 +30,8 @@
 
         .logo img {
             width: 150px;
-            margin-bottom: 1em;
+            display: block;
+            margin: 0 auto 1em auto;
         }
 
         h1 {
@@ -83,7 +84,7 @@
     <div class="container">
         <div class="login-box">
             <div class="logo">
-                <img src="scp-logo.png" alt="SCP Foundation">
+                <img src="https://cdn.discordapp.com/attachments/1303447019268079628/1320703350387376228/output-onlinepngtools_upscayl_4x_realesrgan-x4plus-anime.png?ex=676a9058&is=67693ed8&hm=f6e27e934522832d17c7f4ce05742d0affd68585e1639b7745d43dc9206c2fb1&" alt="SCP Foundation">
             </div>
             <h1>SECURE ACCESS TERMINAL</h1>
             <div class="warning">
@@ -140,9 +141,7 @@
             if (users[username] && users[username].password === password) {
                 window.location.href = users[username].redirect || 'https://testurl.com';
             } else {
-                alert('ACCESS DENIED: Invalid credentials detected. This incident will be reported.');
+                alert('ACCESS DENIED: Invalid credentials detected. This incident will be reported to the Record Keeping And Information Security Administration (R.A.I.S.A) And the Internal Security Department (I.S.D).');
             }
         });
     </script>
-</body>
-</html>
