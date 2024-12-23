@@ -45,6 +45,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
         }
 
         .email-card:hover {
@@ -52,10 +54,26 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
-        .email {
-            color: #2d3436;
+        .email-input {
+            width: 100%;
+            padding: 0.5rem;
             font-size: 1.1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            color: #2d3436;
             font-weight: 500;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .email-input:hover {
+            border-color: #a0a0a0;
+        }
+
+        .email-input:focus {
+            border-color: #2d3436;
+            background-color: white;
         }
 
         @media (max-width: 768px) {
@@ -67,7 +85,7 @@
                 font-size: 2rem;
             }
             
-            .email {
+            .email-input {
                 font-size: 1rem;
             }
         }
@@ -78,21 +96,22 @@
         <h1>Our Team Contacts</h1>
         <div class="email-container">
             <div class="email-card">
-                <span class="email">scpf.site.omegon.human.resources@tidio.xyz/span>
+                <input type="text" class="email-input" value="scpf.site.omegon.human.resources@tidio.xyz" readonly>
             </div>
             <div class="email-card">
-                <span class="email">scpf.site.omegon.human.resources@tidio.xyz</span>
+                <input type="text" class="email-input" value="scpf.site.omegon.human.resources@tidio.xyz" readonly>
             </div>
             <div class="email-card">
-                <span class="email">site.omegon.game.development.team@tidio.xyz</span>
+                <input type="text" class="email-input" value="site.omegon.game.development.team@tidio.xyz" readonly>
             </div>
             <div class="email-card">
-                <span class="email">scpf.site.omegon.game.support@tidio.xyz</span>
+                <input type="text" class="email-input" value="scpf.site.omegon.game.support@tidio.xyz" readonly>
             </div>
             <div class="email-card">
-                <span class="email"legal.site.omegon@tidio.xyz</span>
+                <input type="text" class="email-input" value="legal.site.omegon@tidio.xyz" readonly>
+            </div>
             <div class="email-card">
-                <span class="email"site.omegon.bot.development.team@tidio.xyz>/span>
+                <input type="text" class="email-input" value="site.omegon.bot.development.team@tidio.xyz" readonly>
             </div>
         </div>
     </div>
