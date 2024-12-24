@@ -34,19 +34,40 @@
         requestRedirectPermission();
     </script>
     <style>
-        nav ul li .login-button {
-            padding: 8px 15px;
-            height: auto;
-            line-height: normal;
+             nav ul {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        
+        nav ul li {
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .login-button {
+            display: inline-flex;
+            align-items: center;
+            height: 30px;
+            padding: 0 15px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
         }
         
         .policy-buttons {
-            display: inline-block;
+            display: flex;
+            align-items: center;
             margin-left: 15px;
         }
         
         .policy-button {
-            padding: 8px 15px;
+            display: inline-flex;
+            align-items: center;
+            height: 30px;
+            padding: 0 15px;
             background-color: #333;
             color: white;
             text-decoration: none;
@@ -54,9 +75,11 @@
             margin-left: 10px;
         }
         
+        .login-button:hover,
         .policy-button:hover {
             background-color: #555;
         }
+    </style>
     </style>
 </head>
 <body>
