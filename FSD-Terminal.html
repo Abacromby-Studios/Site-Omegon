@@ -1,119 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FSD Terminal Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility Security Department Dashboard</title>
     <style>
         body {
-            background: #000;
-            font-family: "Courier New", monospace;
+            background-color: #000;
             color: #00ff00;
-            margin: 0;
+            font-family: 'Courier New', monospace;
             padding: 20px;
             line-height: 1.6;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
-        .hidden {
-            opacity: 0;
+        #terminal-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 20px;
         }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: powerOn 1s ease-in forwards;
-            animation-delay: 0.5s;
-        }
-
-        .logo img {
-            width: 200px;
-        }
-
-        .terminal {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 2px solid #00ff00;
-            background: rgba(0, 20, 0, 0.9);
-        }
-
-        .command-line {
-            margin: 10px 0;
-        }
-
-        .cursor {
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        @keyframes powerOn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .typed-text {
-            overflow: hidden;
+        #terminal {
             white-space: pre-wrap;
-            border-right: 2px solid #00ff00;
-            animation: typing 3s steps(40, end);
+            word-wrap: break-word;
         }
-
+        #cursor {
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        #scp-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .typed {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #00ff00;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
-
-        .status {
-            color: #ff0000;
-            margin: 10px 0;
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #00ff00; }
         }
-
-        .welcome-message {
-            color: #ffff00;
-            text-align: center;
-            margin: 20px 0;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
-        .notifications {
-            color: #ff6600;
-            text-align: center;
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #001100;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00ff00;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+        .digital-button {
+            background-color: #001100;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 15px 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            cursor: pointer;
             margin-top: 20px;
+            display: block;
+            width: 300px;
+            margin: 20px auto;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+        .digital-button:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 15px #00ff00;
         }
     </style>
 </head>
 <body>
-    <div class="logo">
-        <img src="https://cdn.discordapp.com/attachments/1303447019268079628/1320703350387376228/output-onlinepngtools_upscayl_4x_realesrgan-x4plus-anime.png?ex=676a9058&is=67693ed8&hm=f6e27e934522832d17c7f4ce05742d0affd68585e1639b7745d43dc9206c2fb1&" alt="FSD Logo">
+    <img id="scp-logo" src="https://cdn.discordapp.com/attachments/1289269250451832954/1297262110610559026/saygex.png?ex=671548fd&is=6713f77d&hm=74cf47be16049ed044ff8bfe1915a43641d828a64df4c0805119de560a0eb6d6&" alt="SCP Logo" style="opacity: 0;">
+    <div id="terminal-container">
+        <div id="terminal"></div>
+        <button class="digital-button" onclick="window.location.href='https://armed-research-and-containment-site-omegon.vercel.app/L-4-Dashboard.html'">Access L-5 Main Dashboard</button>
     </div>
-    <div class="terminal" id="terminal">
-    </div>
-
     <script>
-        const terminalText = [
-            "> boot",
-            "SCP-EPO Booting up",
-            ".",
-            ".",
-            ".",
-            "Terminal booted",
-            "",
-            "> login FSD_Facility_Security_Department_Dark_Crimson-White?",
-            "LOGGING IN",
-            ".",
-            ".",
-            ".",
-            "PLEASE ENTER PASSWORD.",
-            "> pass Foxtrot.Sierra.Delta.Delta.Charlie.Whiskey.1739.313.731",
-            "LOGGING IN…",
-            "",
-            "Welcome Armed Research & Containment Site - Omegon Facility Security Department",
-            "",
-            "YOU HAVE NO NEW NOTIFICATION(S)"
-        ];
-
+        const terminal = document.getElementById('terminal');
+        const terminalContainer = document.getElementById('terminal-container');
+        const logo = document.getElementById('scp-logo');
+        const text = `                                                 SCP FOUNDATION
+————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+                                                                                                > boot
+SCP-EPO Booting up
+.
+.
+.
+Terminal booted
+ 
+                                                    > login Beta_Seven.MobileTaskForce.maz.hatters 
+LOGGING IN
+.
+.
+.
+PLEASE ENTER PASSWORD.
+     
+                                     > pass Foxtrot.Sierra.Delta.1739.091.173 
+LOGGING IN…
+Welcome Armed Research and Containment Site - Omegon Facility Security Department
+YOU HAVE NO NEW NOTIFICATION(S)
+`;
         let index = 0;
         function animateLogo() {
             let opacity = 0;
