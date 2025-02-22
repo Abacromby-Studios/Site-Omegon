@@ -114,32 +114,55 @@
             "YOU HAVE NO NEW NOTIFICATION(S)"
         ];
 
-        function sleep(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
+        let index = 0;
+        function animateLogo() {
+            let opacity = 0;
+            const intervalId = setInterval(() => {
+                opacity += 0.1;
+                logo.style.opacity = opacity;
+                if (opacity >= 1) {
+                    clearInterval(intervalId);
+                }
+            }, 100);
         }
-
-        async function typeText() {
-            const terminal = document.getElementById('terminal');
-            
-            for (let line of terminalText) {
-                const lineDiv = document.createElement('div');
-                lineDiv.className = 'command-line';
-                terminal.appendChild(lineDiv);
-
-                if (line === "") {
-                    await sleep(500);
-                    continue;
-                }
-
-                for (let char of line) {
-                    lineDiv.textContent += char;
-                    await sleep(50);
-                }
-                await sleep(200);
+        function typeText() {
+            if (index < text.length) {
+                terminal.innerHTML += text.charAt(index);
+                index++;
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
+                setTimeout(typeText, Math.random() * 50 + 10);
+            } else {
+                terminal.innerHTML += '<span id="cursor">█</span>';
             }
         }
-
-        window.onload = typeText;
+        logo.onload = function() {
+            console.log("Image loaded successfully");
+            animateLogo();
+        };
+        logo.onerror = function() {
+            console.error("Error loading image");
+            createFallbackLogo();
+        };
+        function createFallbackLogo() {
+            const svgLogo = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svgLogo.setAttribute("id", "scp-logo");
+            svgLogo.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            svgLogo.setAttribute("viewBox", "0 0 100 100");
+            svgLogo.innerHTML = `
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="r" from="0" to="45" dur="2s" begin="0s" fill="freeze" />
+                </circle>
+                <path d="M30 40 Q50 20 70 40 Q50 60 30 40" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 50 Q50 50 50 50 Q50 50 50 50" to="M30 40 Q50 20 70 40 Q50 60 30 40" dur="2s" begin="0s" fill="freeze" />
+                </path>
+                <path d="M30 60 Q50 80 70 60" fill="none" stroke="#00ff00" stroke-width="2">
+                    <animate attributeName="d" from="M50 60 Q50 60 50 60" to="M30 60 Q50 80 70 60" dur="2s" begin="0s" fill="freeze" />
+                </path>
+            `;
+            logo.parentNode.replaceChild(svgLogo, logo);
+            animateLogo();
+        }
+        typeText();
     </script>
 </body>
 </html>
