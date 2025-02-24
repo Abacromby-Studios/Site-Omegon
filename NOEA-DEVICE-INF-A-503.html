@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR 503 - ENFORCEMENT ACTION</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+        }
+        .error-container {
+            text-align: center;
+            padding: 40px;
+            border: 3px solid #ff0000;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 20px #ff0000;
+            animation: pulse 2s infinite;
+        }
+        .error-title {
+            color: #ff0000;
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #8b0000;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px #ff0000; }
+            50% { box-shadow: 0 0 40px #ff0000; }
+            100% { box-shadow: 0 0 20px #ff0000; }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-title">ERROR-503</div>
+        <div class="error-message">
+            YOUR DEVICE HAS BEEN GIVEN AN<br>
+            AUTOMATED ENFORCEMENT ACTION<br><br>
+            Your access to this service has been<br>
+            automatically suspended indefinitely<br>
+            for suspicious activity.<br><br>
+            Please contact ARAC Founder on Xbox<br>
+            immediately once receiving this<br>
+            Enforcement Action Notification.
+        </div>
+    </div>
+</body>
+</html>
