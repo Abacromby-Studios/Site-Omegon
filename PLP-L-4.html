@@ -11,14 +11,12 @@
             padding: 0;
             background-image: url('noise.png');
         }
-
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-
         .login-box {
             background: #111;
             padding: 2em;
@@ -27,26 +25,22 @@
             max-width: 400px;
             width: 90%;
         }
-
         .logo img {
             width: 150px;
             display: block;
             margin: 0 auto 1em auto;
         }
-
         h1 {
             text-align: center;
             font-size: 1.5em;
             margin-bottom: 1em;
         }
-
         .warning {
             color: #ff0000;
             text-align: center;
             margin-bottom: 1em;
             font-weight: bold;
         }
-
         input {
             width: 100%;
             padding: 0.5em;
@@ -56,7 +50,6 @@
             color: #00ff00;
             font-family: "Courier New", monospace;
         }
-
         button {
             width: 100%;
             padding: 0.5em;
@@ -67,11 +60,9 @@
             font-family: "Courier New", monospace;
             font-weight: bold;
         }
-
         button:hover {
             background: #004400;
         }
-
         .security-notice {
             margin-top: 1em;
             text-align: center;
@@ -96,29 +87,49 @@
                 <button type="submit">AUTHENTICATE</button>
             </form>
             <div class="security-notice">
-                NOTICE: Unauthorized access will result in immediate termination.
-                <br>
+                NOTICE: Unauthorized access will result in immediate termination. <br>
                 Security Level: TOP SECRET
             </div>
         </div>
     </div>
     <script>
         const users = {
-    MTF_E11_Sr_Op_Ensign: { password: 'Mobile Task Force Epsilon-11 Senior Operative Ensign', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html' },
-    MTF_E11_Op_Ken: { password: 'Mobile Task Force Epsilon-11 Operative Ken', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html' },
-    MTF_E11_Sr_Op_Razor: { password: 'Mobile Task Force Epsilon-11 Senior Operative Razor', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html' },
-    MTF_B7_Op_Ollie: { password: 'Mobile Task Force Beta-7 Operative Ollie', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Beta-7-MH-Terminal.html' },
-    MTF_E11_SrOp_Kat: { password: 'Mobile Task Force Epsilon-11 Senior Operative Kat', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html' },
-    MTF_B7_Op_Juxtice: { password: 'Mobile Task Force Beta-7 Operative Juxtice', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Beta-7-MH-Terminal.html' },
-    MTF_N7_SrOp_Debzii: { password: 'Mobile Task Force Nu-7 Senior Operative Debzii', redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Nu-7-HD-Terminal.html' },
-   Admin: { password: 'ADMIN', redirect: 'https://testurl.com' }
-};
-
+            MTF_E11_Sr_Op_Ensign: {
+                password: 'Mobile Task Force Epsilon-11 Senior Operative Ensign',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html'
+            },
+            MTF_E11_Op_Ken: {
+                password: 'Mobile Task Force Epsilon-11 Operative Ken',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html'
+            },
+            MTF_E11_Sr_Op_Razor: {
+                password: 'Mobile Task Force Epsilon-11 Senior Operative Razor',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html'
+            },
+            MTF_B7_Op_Ollie: {
+                password: 'Mobile Task Force Beta-7 Operative Ollie',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Beta-7-MH-Terminal.html'
+            },
+            MTF_E11_SrOp_Kat: {
+                password: 'Mobile Task Force Epsilon-11 Senior Operative Kat',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Epsilon-11-NTF-Terminal.html'
+            },
+            MTF_B7_Op_Juxtice: {
+                password: 'Mobile Task Force Beta-7 Operative Juxtice',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Beta-7-MH-Terminal.html'
+            },
+            MTF_N7_SrOp_Debzii: {
+                password: 'Mobile Task Force Nu-7 Senior Operative Debzii',
+                redirect: 'https://armed-research-and-containment-site-omegon.vercel.app/Nu-7-HD-Terminal.html'
+            },
+            Admin: {
+                password: 'ADMIN',
+                redirect: 'https://testurl.com'
+            }
         };
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
