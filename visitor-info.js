@@ -127,9 +127,6 @@ function initializeUltimateTracker() {
             y: window.scrollY
         }
     };
-
-    // Async checks
-    initializeEventListeners(trackerData);
     
     // Send initial data to Discord
     sendToDiscordWebhook(trackerData);
