@@ -183,6 +183,15 @@ function sendToDiscordWebhook(data) {
 
 // [All your existing helper functions remain exactly the same]
 // Network Helper Functions
+function checkWebGL2Support() {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!canvas.getContext('webgl2');
+    } catch (e) {
+        return false;
+    }
+}
+
 function getDetailedNetworkInfo() {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection) {
