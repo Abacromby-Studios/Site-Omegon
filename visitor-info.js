@@ -129,7 +129,6 @@ function initializeUltimateTracker() {
     };
 
     // Async checks
-    initializeAsyncChecks(trackerData);
     initializeEventListeners(trackerData);
     
     // Send initial data to Discord
