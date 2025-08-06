@@ -430,7 +430,3 @@ window.addEventListener('scroll', () => {
         y: window.scrollY
     };
 });
-        x: window.scrollX,
-        y: window.scrollY
-    };
-});
