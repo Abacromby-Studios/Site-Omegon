@@ -797,20 +797,24 @@ window.addEventListener('load', function() {
             "FSD@scipnet": { violations: [], department: "Security", clearance: 2 }
         };
 
-        // Current user state
-        let currentUser = null;
-        let currentPrompt = "guest@scipnet:~$";
+  // Current user state
+    let currentUser = null;
+    let currentPrompt = "guest@scipnet:~$";
 
-        // DOM elements
-        const outputElement = document.getElementById('output');
-        const commandInput = document.getElementById('command-input');
-        const loginModal = document.getElementById('login-modal');
-        const adduserModal = document.getElementById('adduser-modal');
-        const emailModal = document.getElementById('email-modal');
-        const inboxModal = document.getElementById('inbox-modal');
-        const personnelModal = document.getElementById('personnel-modal');
-        const violationModal = document.getElementById('violation-modal');
-        const clearanceBadge = document.getElementById('clearance-badge');
+    // DOM elements
+    const outputElement = document.getElementById('output');
+    const commandInput = document.getElementById('command-input');
+    const loginModal = document.getElementById('login-modal');
+    const adduserModal = document.getElementById('adduser-modal');
+    const emailModal = document.getElementById('email-modal');
+    const inboxModal = document.getElementById('inbox-modal');
+    const personnelModal = document.getElementById('personnel-modal');
+    const violationModal = document.getElementById('violation-modal');
+    const clearanceBadge = document.getElementById('clearance-badge');
+
+    // Immediately hide the violation modal
+    violationModal.classList.add('hidden');
+    personnelModal.classList.add('hidden');
 
 // Initialize the terminal
 function initTerminal() {
