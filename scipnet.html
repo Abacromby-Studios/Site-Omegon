@@ -253,6 +253,10 @@
             cursor: pointer;
         }
         
+        .close-button:hover {
+            color: var(--highlight);
+        }
+        
         .email-form .form-group, .user-form .form-group {
             margin-bottom: 15px;
         }
@@ -286,10 +290,19 @@
             cursor: pointer;
             background-color: var(--background);
             color: var(--text);
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: rgba(0, 80, 0, 0.5);
         }
         
         .btn-primary {
             background-color: rgba(0, 80, 0, 0.5);
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(0, 100, 0, 0.7);
         }
         
         /* Email list */
@@ -305,6 +318,7 @@
             padding: 10px;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         
         .email-item:hover {
@@ -797,6 +811,19 @@
             
             // Load users and personnel from localStorage if available
             loadSavedData();
+            
+            // Make sure all modals are hidden on startup
+            hideAllModals();
+        }
+
+        // Hide all modals
+        function hideAllModals() {
+            loginModal.classList.add('hidden');
+            adduserModal.classList.add('hidden');
+            emailModal.classList.add('hidden');
+            inboxModal.classList.add('hidden');
+            personnelModal.classList.add('hidden');
+            violationModal.classList.add('hidden');
         }
 
         // Load saved data from localStorage
