@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCiPNET Terminal | Secure Containment Installation - 39</title>
+    <style>
+        :root {
+            --background: #0a0a0a;
+            --terminal: #001900;
+            --text: #00ff00;
+            --prompt: #00cc00;
+            --error: #ff3333;
+            --warning: #ffff00;
+            --highlight: #00ffff;
+            --border: #004400;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 80, 0, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 60%, rgba(0, 80, 0, 0.1) 0%, transparent 20%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .terminal-header {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .terminal-header h1 {
+            font-size: 24px;
+            color: var(--highlight);
+            text-shadow: 0 0 5px var(--highlight);
+            letter-spacing: 2px;
+        }
+        
+        .terminal-header::before, .terminal-header::after {
+            content: "═";
+            color: var(--border);
+            margin: 0 10px;
+        }
+        
+        .clearance-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            font-size: 12px;
+            background-color: rgba(0, 30, 0, 0.5);
+        }
+        
+        .terminal {
+            background-color: var(--terminal);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+        }
+        
+        .output {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .output-line {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        
+        .prompt {
+            color: var(--prompt);
+            font-weight: bold;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+        
+        .prompt-display {
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        #command-input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .login-screen {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .login-form {
+            margin-top: 30px;
+            display: inline-block;
+            text-align: left;
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 30, 0, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--prompt);
+        }
+        
+        .form-group input {
+            width: 300px;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            outline: none;
+        }
+        
+        .login-button {
+            background-color: var(--background);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .login-button:hover {
+            background-color: rgba(0, 80, 0, 0.5);
+        }
+        
+        .error {
+            color: var(--error);
+        }
+        
+        .warning {
+            color: var(--warning);
+        }
+        
+        .highlight {
+            color: var(--highlight);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Scrollbar styling */
+        .output::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .output::-webkit-scrollbar-track {
+            background: rgba(0, 30, 0, 0.3);
+        }
+        
+        .output::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        
+        /* Email modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: var(--terminal);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 20px;
+            width: 600px;
+            max-width: 90%;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        
+        .modal-title {
+            color: var(--highlight);
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .email-form .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .email-form input, .email-form select, .email-form textarea {
+            width: 100%;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+        }
+        
+        .email-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            cursor: pointer;
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .btn-primary {
+            background-color: rgba(0, 80, 0, 0.5);
+        }
+        
+        /* Email list */
+        .email-list {
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .email-item {
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+        
+        .email-item:hover {
+            background-color: rgba(0, 80, 0, 0.2);
+        }
+        
+        .email-subject {
+            font-weight: bold;
+        }
+        
+        .email-metadata {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--prompt);
+            margin-top: 5px;
+        }
+        
+        .email-priority {
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 10px;
+        }
+        
+        .priority-high {
+            background-color: rgba(255, 0, 0, 0.3);
+            color: var(--error);
+        }
+        
+        .priority-medium {
+            background-color: rgba(255, 255, 0, 0.3);
+            color: var(--warning);
+        }
+        
+        .priority-low {
+            background-color: rgba(0, 255, 0, 0.3);
+            color: var(--text);
+        }
+        
+        /* Personnel record */
+        .record-container {
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .record-field {
+            margin-bottom: 10px;
+        }
+        
+        .record-field label {
+            color: var(--prompt);
+            display: inline-block;
+            width: 120px;
+        }
+        
+        .violations-list {
+            margin-top: 15px;
+        }
+        
+        .violation-item {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            margin-bottom: 10px;
+            background-color: rgba(30, 0, 0, 0.2);
+        }
+        
+        .violation-class {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .class-alpha { color: #ff5555; }
+        .class-bravo { color: #ffaa00; }
+        .class-charlie { color: #ffff55; }
+        .class-delta { color: #55ff55; }
+        .class-echo { color: #5555ff; }
+        .class-xray { color: #aa00aa; }
+        
+        /* SCP search results */
+        .scp-result {
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .scp-title {
+            color: var(--highlight);
+            margin-bottom: 10px;
+        }
+        
+        .scp-class {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            background-color: rgba(0, 80, 0, 0.3);
+            margin-right: 10px;
+        }
+        
+        .scp-description {
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        /* Command help */
+        .help-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .help-table th, .help-table td {
+            border: 1px solid var(--border);
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .help-table th {
+            background-color: rgba(0, 30, 0, 0.3);
+            color: var(--highlight);
+        }
+        
+        /* Blinking cursor effect */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: var(--text);
+            vertical-align: middle;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="terminal-header">
+            <h1>SCiPNET TERMINAL</h1>
+            <div class="clearance-badge" id="clearance-badge">UNAUTHORIZED</div>
+        </div>
+        
+        <div class="terminal">
+            <div class="output" id="output">
+                <div class="output-line">SCiPNET Terminal v3.4.2</div>
+                <div class="output-line">Secure Containment Installation - 39</div>
+                <div class="output-line">============================================</div>
+                <div class="output-line">Type 'login' to authenticate or 'help' for available commands.</div>
+                <div class="output-line"></div>
+            </div>
+            
+            <div class="input-line">
+                <div class="prompt-display"><span class="prompt">guest@scipnet:~$</span></div>
+                <input type="text" id="command-input" autofocus>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="modal hidden" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">SCiPNET Authentication</h2>
+                <button class="close-button" id="close-login">&times;</button>
+            </div>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="user@scipnet">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password">
+                </div>
+                <button class="login-button" id="submit-login">Authenticate</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Email Modal -->
+    <div class="modal hidden" id="email-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">SCiPNET Messaging System</h2>
+                <button class="close-button" id="close-email">&times;</button>
+            </div>
+            <div class="email-form">
+                <div class="form-group">
+                    <label for="recipient">To:</label>
+                    <input type="text" id="recipient" placeholder="recipient@scipnet">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject">
+                </div>
+                <div class="form-group">
+                    <label for="classification">Classification:</label>
+                    <select id="classification">
+                        <option value="Unclassified">Unclassified</option>
+                        <option value="Confidential">Confidential (Level 1)</option>
+                        <option value="Restricted">Restricted (Level 2)</option>
+                        <option value="Secret">Secret (Level 3)</option>
+                        <option value="Top Secret">Top Secret (Level 4)</option>
+                        <option value="Thaumiel">Thaumiel (Level 5)</option>
+                        <option value="Omni">Omni (Level 6)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority:</label>
+                    <select id="priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" id="cancel-email">Cancel</button>
+                    <button class="btn btn-primary" id="send-email">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Email List Modal -->
+    <div class="modal hidden" id="inbox-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">SCiPNET Inbox</h2>
+                <button class="close-button" id="close-inbox">&times;</button>
+            </div>
+            <div id="email-list" class="email-list">
+                <!-- Emails will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Personnel Search Modal -->
+    <div class="modal hidden" id="personnel-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Personnel Records Database</h2>
+                <button class="close-button" id="close-personnel">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="search-personnel">Search Personnel:</label>
+                <input type="text" id="search-personnel" placeholder="Enter username or ID">
+            </div>
+            <button class="btn btn-primary" id="search-personnel-btn">Search</button>
+            <div id="personnel-results">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Violation Modal -->
+    <div class="modal hidden" id="violation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Security Violation</h2>
+                <button class="close-button" id="close-violation">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="violation-personnel">Personnel:</label>
+                <input type="text" id="violation-personnel" readonly>
+            </div>
+            <div class="form-group">
+                <label for="violation-class">Violation Class:</label>
+                <select id="violation-class">
+                    <option value="Alpha">Alpha</option>
+                    <option value="Bravo">Bravo</option>
+                    <option value="Charlie">Charlie</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Echo">Echo</option>
+                    <option value="X-Ray">X-Ray</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="violation-reason">Reason (min. 8 characters):</label>
+                <textarea id="violation-reason"></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn" id="cancel-violation">Cancel</button>
+                <button class="btn btn-primary" id="submit-violation">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User database with hardcoded credentials
+        const users = {
+            "ad@scipnet": { 
+                password: "adminpass", 
+                clearance: 5, 
+                department: "Administrative", 
+                prompt: "ad@scipnet:$>" 
+            },
+            "doraec@scipnet": { 
+                password: "ethicspass", 
+                clearance: 5, 
+                department: "Ethics Committee", 
+                prompt: "doraec@scipnet:$>" 
+            },
+            "EXPUNGED@scipnet": { 
+                password: "mtfpass", 
+                clearance: 4, 
+                department: "MTF", 
+                prompt: "EXPUNGED@scipnet:$>" 
+            },
+            "Bravo-7@scipnet": { 
+                password: "bravo7pass", 
+                clearance: 3, 
+                department: "MTF B-7", 
+                prompt: "Bravo-7@scipnet:$>" 
+            },
+            "Epsilon-11@scipnet": { 
+                password: "epsilon11pass", 
+                clearance: 3, 
+                department: "MTF E-11", 
+                prompt: "Epsilon-11@scipnet:$>" 
+            },
+            "Nu-7@scipnet": { 
+                password: "nu7pass", 
+                clearance: 3, 
+                department: "MTF N-7", 
+                prompt: "Nu-7@scipnet:$>" 
+            },
+            "admin@scipnet": { 
+                password: "o5pass", 
+                clearance: 6, 
+                department: "O5 Council", 
+                prompt: "admin@scipnet:$>" 
+            },
+            "Administrator@scipnet": { 
+                password: "ootapass", 
+                clearance: 6, 
+                department: "OoTA", 
+                prompt: "Administrator@scipnet:$>" 
+            },
+            "REDACTED@scipnet": { 
+                password: "isdpass", 
+                clearance: 5, 
+                department: "ISD", 
+                prompt: "REDACTED@scipnet:$>" 
+            },
+            "CLASSIFIEDE@scipnet": { 
+                password: "iapass", 
+                clearance: 5, 
+                department: "IA", 
+                prompt: "CLASSIFIEDE@scipnet:$>" 
+            },
+            "FSD@scipnet": { 
+                password: "securitypass", 
+                clearance: 2, 
+                department: "Security", 
+                prompt: "FSD@scipnet:$>" 
+            }
+        };
+
+        // Clearance levels
+        const clearances = {
+            1: "Confidential",
+            2: "Restricted",
+            3: "Secret",
+            4: "Top Secret",
+            5: "Thaumiel",
+            6: "Omni"
+        };
+
+        // Email database
+        let emails = JSON.parse(localStorage.getItem('scipnet_emails')) || {};
+        
+        // Personnel records with violations
+        let personnelRecords = JSON.parse(localStorage.getItem('scipnet_personnel')) || {
+            "ad@scipnet": { violations: [] },
+            "doraec@scipnet": { violations: [] },
+            "EXPUNGED@scipnet": { violations: [] },
+            "Bravo-7@scipnet": { violations: [] },
+            "Epsilon-11@scipnet": { violations: [] },
+            "Nu-7@scipnet": { violations: [] },
+            "admin@scipnet": { violations: [] },
+            "Administrator@scipnet": { violations: [] },
+            "REDACTED@scipnet": { violations: [] },
+            "CLASSIFIEDE@scipnet": { violations: [] },
+            "FSD@scipnet": { violations: [] }
+        };
+
+        // Current user state
+        let currentUser = null;
+        let currentPrompt = "guest@scipnet:~$";
+
+        // DOM elements
+        const outputElement = document.getElementById('output');
+        const commandInput = document.getElementById('command-input');
+        const loginModal = document.getElementById('login-modal');
+        const emailModal = document.getElementById('email-modal');
+        const inboxModal = document.getElementById('inbox-modal');
+        const personnelModal = document.getElementById('personnel-modal');
+        const violationModal = document.getElementById('violation-modal');
+        const clearanceBadge = document.getElementById('clearance-badge');
+
+        // Initialize the terminal
+        function initTerminal() {
+            commandInput.addEventListener('keydown', handleCommandInput);
+            setupModalEventListeners();
+            
+            // Load any saved emails for the current user if logged in
+            if (currentUser) {
+                loadEmails();
+            }
+        }
+
+        // Set up modal event listeners
+        function setupModalEventListeners() {
+            // Login modal
+            document.getElementById('submit-login').addEventListener('click', handleLogin);
+            document.getElementById('close-login').addEventListener('click', () => loginModal.classList.add('hidden'));
+            
+            // Email modal
+            document.getElementById('send-email').addEventListener('click', sendEmail);
+            document.getElementById('cancel-email').addEventListener('click', () => emailModal.classList.add('hidden'));
+            document.getElementById('close-email').addEventListener('click', () => emailModal.classList.add('hidden'));
+            
+            // Inbox modal
+            document.getElementById('close-inbox').addEventListener('click', () => inboxModal.classList.add('hidden'));
+            
+            // Personnel modal
+            document.getElementById('close-personnel').addEventListener('click', () => personnelModal.classList.add('hidden'));
+            document.getElementById('search-personnel-btn').addEventListener('click', searchPersonnel);
+            
+            // Violation modal
+            document.getElementById('close-violation').addEventListener('click', () => violationModal.classList.add('hidden'));
+            document.getElementById('cancel-violation').addEventListener('click', () => violationModal.classList.add('hidden'));
+            document.getElementById('submit-violation').addEventListener('click', addViolation);
+        }
+
+        // Handle command input
+        function handleCommandInput(e) {
+            if (e.key === 'Enter') {
+                const command = commandInput.value.trim();
+                commandInput.value = '';
+                
+                addOutputLine(`${currentPrompt} ${command}`);
+                
+                if (command) {
+                    processCommand(command);
+                }
+                
+                // Scroll to bottom
+                outputElement.scrollTop = outputElement.scrollHeight;
+            }
+        }
+
+        // Process commands
+        function processCommand(command) {
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+            
+            switch(cmd) {
+                case 'login':
+                    if (currentUser) {
+                        addOutputLine(`Already logged in as ${currentUser}`);
+                    } else {
+                        loginModal.classList.remove('hidden');
+                    }
+                    break;
+                    
+                case 'logout':
+                    if (currentUser) {
+                        addOutputLine(`Logging out user ${currentUser}`);
+                        currentUser = null;
+                        currentPrompt = "guest@scipnet:~$";
+                        clearanceBadge.textContent = "UNAUTHORIZED";
+                    } else {
+                        addOutputLine("Not currently logged in");
+                    }
+                    break;
+                    
+                case 'e-lockout':
+                    if (currentUser) {
+                        addOutputLine("Initiating emergency lockout procedure...");
+                        addOutputLine("All non-essential systems disabled.");
+                        addOutputLine("Security protocols engaged.");
+                    } else {
+                        addOutputLine("Access denied. Authentication required.");
+                    }
+                    break;
+                    
+                case 'email':
+                    if (!currentUser) {
+                        addOutputLine("Access denied. Authentication required.");
+                        return;
+                    }
+                    
+                    if (args.length === 0) {
+                        addOutputLine("Usage: email [send|inbox]");
+                        return;
+                    }
+                    
+                    if (args[0] === 'send') {
+                        emailModal.classList.remove('hidden');
+                    } else if (args[0] === 'inbox') {
+                        showInbox();
+                    } else {
+                        addOutputLine("Invalid email command. Usage: email [send|inbox]");
+                    }
+                    break;
+                    
+                case 'lookup':
+                    if (!currentUser) {
+                        addOutputLine("Access denied. Authentication required.");
+                        return;
+                    }
+                    
+                    // Check if user has clearance for personnel lookup
+                    const userData = users[currentUser];
+                    if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
+                         'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser)) {
+                        personnelModal.classList.remove('hidden');
+                    } else {
+                        addOutputLine("Access denied. Insufficient clearance for personnel records.");
+                    }
+                    break;
+                    
+                case 'access':
+                    if (!currentUser) {
+                        addOutputLine("Access denied. Authentication required.");
+                        return;
+                    }
+                    
+                    if (args.length === 0) {
+                        addOutputLine("Usage: access [SCP designation]");
+                        addOutputLine("Example: access SCP-173");
+                        return;
+                    }
+                    
+                    const scpDesignation = args[0].toUpperCase();
+                    searchSCP(scpDesignation);
+                    break;
+                    
+                case 'clear':
+                    outputElement.innerHTML = '';
+                    break;
+                    
+                case 'help':
+                    showHelp();
+                    break;
+                    
+                default:
+                    addOutputLine(`Command not found: ${cmd}`);
+            }
+        }
+
+        // Handle login
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (users[username] && users[username].password === password) {
+                currentUser = username;
+                currentPrompt = users[username].prompt;
+                
+                // Update clearance badge
+                const clearanceLevel = users[username].clearance;
+                clearanceBadge.textContent = clearances[clearanceLevel];
+                
+                addOutputLine(`Authentication successful. Welcome, ${username}`);
+                addOutputLine(`Clearance level: ${clearances[clearanceLevel]}`);
+                
+                // Load user's emails
+                loadEmails();
+                
+                loginModal.classList.add('hidden');
+                
+                // Clear login form
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                addOutputLine("Authentication failed. Invalid credentials.", "error");
+            }
+        }
+
+        // Send email
+        function sendEmail() {
+            const recipient = document.getElementById('recipient').value;
+            const subject = document.getElementById('subject').value;
+            const classification = document.getElementById('classification').value;
+            const priority = document.getElementById('priority').value;
+            const message = document.getElementById('message').value;
+            
+            if (!recipient || !subject || !message) {
+                addOutputLine("Error: All fields are required.", "error");
+                return;
+            }
+            
+            // Check if recipient exists
+            if (!users[recipient]) {
+                addOutputLine(`Error: Recipient ${recipient} not found.`, "error");
+                return;
+            }
+            
+            // Create email object
+            const email = {
+                from: currentUser,
+                to: recipient,
+                subject,
+                classification,
+                priority,
+                message,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Save to emails database
+            if (!emails[recipient]) {
+                emails[recipient] = [];
+            }
+            emails[recipient].push(email);
+            
+            // Save to localStorage
+            localStorage.setItem('scipnet_emails', JSON.stringify(emails));
+            
+            addOutputLine(`Message sent to ${recipient} successfully.`);
+            
+            // Clear form and close modal
+            document.getElementById('recipient').value = '';
+            document.getElementById('subject').value = '';
+            document.getElementById('message').value = '';
+            emailModal.classList.add('hidden');
+        }
+
+        // Load emails for current user
+        function loadEmails() {
+            if (!emails[currentUser]) {
+                emails[currentUser] = [];
+            }
+        }
+
+        // Show inbox
+        function showInbox() {
+            const emailList = document.getElementById('email-list');
+            emailList.innerHTML = '';
+            
+            if (!emails[currentUser] || emails[currentUser].length === 0) {
+                emailList.innerHTML = '<div class="email-item">No messages</div>';
+            } else {
+                emails[currentUser].forEach((email, index) => {
+                    const emailItem = document.createElement('div');
+                    emailItem.className = 'email-item';
+                    emailItem.innerHTML = `
+                        <div class="email-subject">${email.subject}</div>
+                        <div class="email-metadata">
+                            <span>From: ${email.from}</span>
+                            <span class="email-priority priority-${email.priority.toLowerCase()}">${email.priority}</span>
+                        </div>
+                        <div class="email-metadata">
+                            <span>${new Date(email.timestamp).toLocaleString()}</span>
+                            <span>${email.classification}</span>
+                        </div>
+                    `;
+                    
+                    emailItem.addEventListener('click', () => {
+                        alert(`From: ${email.from}\nSubject: ${email.subject}\nClassification: ${email.classification}\n\n${email.message}`);
+                    });
+                    
+                    emailList.appendChild(emailItem);
+                });
+            }
+            
+            inboxModal.classList.remove('hidden');
+        }
+
+        // Search personnel
+        function searchPersonnel() {
+            const searchTerm = document.getElementById('search-personnel').value;
+            const resultsDiv = document.getElementById('personnel-results');
+            
+            resultsDiv.innerHTML = '';
+            
+            if (!searchTerm) {
+                resultsDiv.innerHTML = '<div class="output-line error">Please enter a search term</div>';
+                return;
+            }
+            
+            // Find matching users
+            const matches = Object.keys(users).filter(username => 
+                username.includes(searchTerm) || users[username].department.includes(searchTerm)
+            );
+            
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<div class="output-line">No personnel found</div>';
+                return;
+            }
+            
+            matches.forEach(username => {
+                const user = users[username];
+                const record = personnelRecords[username] || { violations: [] };
+                
+                const recordDiv = document.createElement('div');
+                recordDiv.className = 'record-container';
+                recordDiv.innerHTML = `
+                    <div class="record-header">
+                        <h3>${username}</h3>
+                        <span>Clearance: ${clearances[user.clearance]}</span>
+                    </div>
+                    <div class="record-field">
+                        <label>Department:</label> ${user.department}
+                    </div>
+                    <div class="record-field">
+                        <label>Email:</label> ${username}
+                    </div>
+                    <div class="violations-list">
+                        <h4>Security Violations (${record.violations.length})</h4>
+                        ${record.violations.map(violation => `
+                            <div class="violation-item">
+                                <span class="violation-class class-${violation.class.toLowerCase()}">${violation.class}</span>
+                                <span>${violation.reason}</span>
+                                <div class="email-metadata">
+                                    ${new Date(violation.timestamp).toLocaleString()}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                // Add violation button for authorized users
+                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser)) {
+                    const addButton = document.createElement('button');
+                    addButton.className = 'btn';
+                    addButton.textContent = 'Add Violation';
+                    addButton.addEventListener('click', () => {
+                        document.getElementById('violation-personnel').value = username;
+                        violationModal.classList.remove('hidden');
+                    });
+                    recordDiv.appendChild(addButton);
+                }
+                
+                resultsDiv.appendChild(recordDiv);
+            });
+        }
+
+        // Add violation to personnel record
+        function addViolation() {
+            const personnel = document.getElementById('violation-personnel').value;
+            const violationClass = document.getElementById('violation-class').value;
+            const reason = document.getElementById('violation-reason').value;
+            
+            if (reason.length < 8) {
+                alert("Reason must be at least 8 characters long.");
+                return;
+            }
+            
+            // Initialize personnel record if it doesn't exist
+            if (!personnelRecords[personnel]) {
+                personnelRecords[personnel] = { violations: [] };
+            }
+            
+            // Add violation
+            personnelRecords[personnel].violations.push({
+                class: violationClass,
+                reason,
+                timestamp: new Date().toISOString(),
+                addedBy: currentUser
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('scipnet_personnel', JSON.stringify(personnelRecords));
+            
+            addOutputLine(`Added ${violationClass} violation to ${personnel}'s record.`);
+            
+            // Clear form and close modal
+            document.getElementById('violation-personnel').value = '';
+            document.getElementById('violation-reason').value = '';
+            violationModal.classList.add('hidden');
+            
+            // Refresh search results if personnel modal is open
+            if (!personnelModal.classList.contains('hidden')) {
+                searchPersonnel();
+            }
+        }
+
+        // Search SCP (simulated)
+        function searchSCP(designation) {
+            addOutputLine(`Accessing SCP Foundation database...`);
+            addOutputLine(`Searching for ${designation}...`);
+            
+            // Simulate loading
+            setTimeout(() => {
+                // Mock SCP data
+                const scpData = {
+                    "SCP-173": {
+                        class: "Euclid",
+                        title: "The Sculpture",
+                        description: "SCP-173 is a concrete statue that is animate and extremely hostile. The object cannot move while within a direct line of sight. Line of sight must not be broken at any time with SCP-173."
+                    },
+                    "SCP-049": {
+                        class: "Euclid",
+                        title: "The Plague Doctor",
+                        description: "SCP-049 is a humanoid entity that believes it can 'cure' the pestilence it perceives in humans. Its touch is invariably fatal to humans."
+                    },
+                    "SCP-096": {
+                        class: "Euclid",
+                        title: "The Shy Guy",
+                        description: "SCP-096 is a humanoid creature that becomes extremely aggressive if anyone views its face, either directly or via photographic representation."
+                    },
+                    "SCP-106": {
+                        class: "Keter",
+                        title: "The Old Man",
+                        description: "SCP-106 is a hostile humanoid entity that can phase through solid matter and drag victims into its pocket dimension."
+                    },
+                    "SCP-682": {
+                        class: "Keter",
+                        title: "The Hard-to-Destroy Reptile",
+                        description: "SCP-682 is a massive, reptilian creature that displays extreme hatred for all life and possesses incredible adaptability and regenerative abilities."
+                    },
+                    "SCP-999": {
+                        class: "Safe",
+                        title: "The Tickle Monster",
+                        description: "SCP-999 is an orange, gelatinous creature that exhibits a friendly and playful demeanor. It has a positive effect on those who come into contact with it."
+                    }
+                };
+                
+                if (scpData[designation]) {
+                    const scp = scpData[designation];
+                    addOutputLine(`=== ${designation}: ${scp.title} ===`);
+                    addOutputLine(`Object Class: ${scp.class}`);
+                    addOutputLine(`Description: ${scp.description}`);
+                } else {
+                    addOutputLine(`No record found for ${designation}.`, "error");
+                }
+            }, 1500);
+        }
+
+        // Show help
+        function showHelp() {
+            addOutputLine("=== SCiPNET Terminal Commands ===");
+            addOutputLine("login - Authenticate to the system");
+            addOutputLine("logout - End current session");
+            addOutputLine("e-lockout - Initiate emergency lockdown");
+            addOutputLine("email send - Compose a new message");
+            addOutputLine("email inbox - View received messages");
+            
+            if (currentUser) {
+                const user = users[currentUser];
+                
+                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
+                     'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser)) {
+                    addOutputLine("lookup - Search personnel records");
+                }
+                
+                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser)) {
+                    addOutputLine("addviolation - Add security violation to personnel record");
+                }
+                
+                addOutputLine("access [SCP] - Retrieve SCP documentation");
+            }
+            
+            addOutputLine("clear - Clear terminal output");
+            addOutputLine("help - Display this help message");
+        }
+
+        // Add output line to terminal
+        function addOutputLine(text, type = "") {
+            const line = document.createElement('div');
+            line.className = `output-line ${type}`;
+            line.textContent = text;
+            outputElement.appendChild(line);
+        }
+
+        // Initialize the terminal when page loads
+        window.addEventListener('load', initTerminal);
+    </script>
+</body>
+</html>
