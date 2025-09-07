@@ -801,6 +801,7 @@
 
         // Initialize the terminal
         function initTerminal() {
+            setTimeout(() => violationModal.classList.add('hidden'), 0);
             commandInput.addEventListener('keydown', handleCommandInput);
             setupModalEventListeners();
             // Force hide all modals on startup
