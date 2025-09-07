@@ -481,6 +481,9 @@
         #violation-modal {
         display: none !important;
 }
+        .modal {
+    display: none !important;
+}
         
     </style>
 </head>
@@ -815,6 +818,12 @@
             setupModalEventListeners();
             // Force hide all modals on startup
 document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+            setTimeout(() => {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+        modal.classList.add('hidden');
+    });
+}, 100);
             
             // Load any saved emails for the current user if logged in
             if (currentUser) {
