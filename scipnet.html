@@ -480,7 +480,24 @@
     display: none !important;
 }
 
-/* Add this to make sure modals work correctly when opened */
+#personnel-modal {
+    display: none !important;
+}
+
+/* Make sure personnel modal works correctly when opened */
+#personnel-modal.hidden {
+    display: none !important;
+}
+
+#personnel-modal:not(.hidden) {
+    display: flex !important;
+}
+
+#violation-modal {
+    display: none !important;
+}
+
+/* Make sure violation modal works correctly when opened */
 #violation-modal.hidden {
     display: none !important;
 }
