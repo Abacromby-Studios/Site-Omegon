@@ -803,6 +803,8 @@
         function initTerminal() {
             commandInput.addEventListener('keydown', handleCommandInput);
             setupModalEventListeners();
+            // Force hide all modals on startup
+document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
             
             // Load any saved emails for the current user if logged in
             if (currentUser) {
