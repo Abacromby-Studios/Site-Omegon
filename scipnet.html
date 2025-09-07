@@ -483,27 +483,34 @@
 #personnel-modal {
     display: none !important;
 }
-
-/* Make sure personnel modal works correctly when opened */
-#personnel-modal.hidden {
-    display: none !important;
-}
-
-#personnel-modal:not(.hidden) {
-    display: flex !important;
-}
-
+/* Force hide all modals by default */
+#login-modal,
+#adduser-modal,
+#email-modal,
+#inbox-modal,
+#personnel-modal,
 #violation-modal {
     display: none !important;
 }
 
-/* Make sure violation modal works correctly when opened */
-#violation-modal.hidden {
-    display: none !important;
-}
-
+/* Make sure modals work correctly when opened */
+#login-modal:not(.hidden),
+#adduser-modal:not(.hidden),
+#email-modal:not(.hidden),
+#inbox-modal:not(.hidden),
+#personnel-modal:not(.hidden),
 #violation-modal:not(.hidden) {
     display: flex !important;
+}
+
+/* Keep modals hidden when they have the hidden class */
+#login-modal.hidden,
+#adduser-modal.hidden,
+#email-modal.hidden,
+#inbox-modal.hidden,
+#personnel-modal.hidden,
+#violation-modal.hidden {
+    display: none !important;
 }
     </style>
 </head>
