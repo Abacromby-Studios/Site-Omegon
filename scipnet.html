@@ -802,27 +802,20 @@
         const violationModal = document.getElementById('violation-modal');
         const clearanceBadge = document.getElementById('clearance-badge');
 
-        // Initialize the terminal
-        function initTerminal() {
-            setTimeout(() => violationModal.classList.add('hidden'), 0);
-            commandInput.addEventListener('keydown', handleCommandInput);
-            setupModalEventListeners();
-            // Force hide all modals on startup
-document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            setTimeout(() => {
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.style.display = 'none';
-        modal.classList.add('hidden');
-    });
-}, 100);
-            setTimeout(() => {
-    const problematicModals = [violationModal, personnelModal];
-    problematicModals.forEach(modal => {
-        if (!modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-        }
-    });
-}, 50);
+// Initialize the terminal
+function initTerminal() {
+    commandInput.addEventListener('keydown', handleCommandInput);
+    setupModalEventListeners();
+    
+    // Hide all modals on startup (just once)
+    document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
+    
+    // Extra protection for problematic modals
+    setTimeout(() => {
+        violationModal.classList.add('hidden');
+        personnelModal.classList.add('hidden');
+    }, 50);
+}
             
             // Load any saved emails for the current user if logged in
             if (currentUser) {
