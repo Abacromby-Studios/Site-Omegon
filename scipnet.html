@@ -864,6 +864,12 @@ document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden
 
         // Set up modal event listeners
         function setupModalEventListeners() {
+            //fix for personnel search modal
+            document.getElementById('close-personnel').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            personnelModal.classList.add('hidden');
+         });
             // Login modal
             document.getElementById('submit-login').addEventListener('click', handleLogin);
             document.getElementById('close-login').addEventListener('click', () => loginModal.classList.add('hidden'));
