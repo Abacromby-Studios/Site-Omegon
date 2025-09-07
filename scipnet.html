@@ -476,6 +476,18 @@
         .dept-mtf { color: #ffff55; }
         .dept-security { color: #55ff55; }
         .dept-other { color: #ffaa00; }     
+        #violation-modal {
+    display: none !important;
+}
+
+/* Add this to make sure modals work correctly when opened */
+#violation-modal.hidden {
+    display: none !important;
+}
+
+#violation-modal:not(.hidden) {
+    display: flex !important;
+}
     </style>
 </head>
 <body>
