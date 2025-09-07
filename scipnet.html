@@ -476,6 +476,12 @@
         .dept-mtf { color: #ffff55; }
         .dept-security { color: #55ff55; }
         .dept-other { color: #ffaa00; }
+       }
+        
+        #violation-modal {
+        display: none !important;
+}
+        
     </style>
 </head>
 <body>
@@ -686,6 +692,9 @@
     </div>
 
     <script>
+        window.addEventListener('load', function() {
+    document.getElementById('violation-modal').style.display = 'none';
+});
         // User database with hardcoded credentials
         const users = {
             "ad@scipnet": { 
