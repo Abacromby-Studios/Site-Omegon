@@ -815,6 +815,14 @@ document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden
         modal.classList.add('hidden');
     });
 }, 100);
+            setTimeout(() => {
+    const problematicModals = [violationModal, personnelModal];
+    problematicModals.forEach(modal => {
+        if (!modal.classList.contains('hidden')) {
+            modal.classList.add('hidden');
+        }
+    });
+}, 50);
             
             // Load any saved emails for the current user if logged in
             if (currentUser) {
