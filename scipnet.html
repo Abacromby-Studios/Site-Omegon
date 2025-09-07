@@ -685,119 +685,106 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('load', function() {
-    document.getElementById('violation-modal').style.display = 'none';
-});
-        // User database with hardcoded credentials
-        const users = {
-            "ad@scipnet": { 
-                password: "adminpass", 
-                clearance: 5, 
-                department: "Administrative", 
-                prompt: "ad@scipnet:$>" 
-            },
-            "doraec@scipnet": { 
-                password: "ethicspass", 
-                clearance: 5, 
-                department: "Ethics Committee", 
-                prompt: "doraec@scipnet:$>" 
-            },
-            "EXPUNGED@scipnet": { 
-                password: "mtfpass", 
-                clearance: 4, 
-                department: "MTF", 
-                prompt: "EXPUNGED@scipnet:$>" 
-            },
-            "Bravo-7@scipnet": { 
-                password: "bravo7pass", 
-                clearance: 3, 
-                department: "MTF B-7", 
-                prompt: "Bravo-7@scipnet:$>" 
-            },
-            "Epsilon-11@scipnet": { 
-                password: "epsilon11pass", 
-                clearance: 3, 
-                department: "MTF E-11", 
-                prompt: "Epsilon-11@scipnet:$>" 
-            },
-            "Nu-7@scipnet": { 
-                password: "nu7pass", 
-                clearance: 3, 
-                department: "MTF N-7", 
-                prompt: "Nu-7@scipnet:$>" 
-            },
-            "admin@scipnet": { 
-                password: "o5pass", 
-                clearance: 6, 
-                department: "O5 Council", 
-                prompt: "admin@scipnet:$>" 
-            },
-            "Administrator@scipnet": { 
-                password: "ootapass", 
-                clearance: 6, 
-                department: "OoTA", 
-                prompt: "Administrator@scipnet:$>" 
-            },
-            "REDACTED@scipnet": { 
-                password: "isdpass", 
-                clearance: 5, 
-                department: "ISD", 
-                prompt: "REDACTED@scipnet:$>" 
-            },
-            "CLASSIFIEDE@scipnet": { 
-                password: "iapass", 
-                clearance: 5, 
-                department: "IA", 
-                prompt: "CLASSIFIEDE@scipnet:$>" 
-            },
-            "FSD@scipnet": { 
-                password: "securitypass", 
-                clearance: 2, 
-                department: "Security", 
-                prompt: "FSD@scipnet:$>" 
-            }
-        };
+<script>
+    // User database with hardcoded credentials
+    const users = {
+        "ad@scipnet": { 
+            password: "adminpass", 
+            clearance: 5, 
+            department: "Administrative", 
+            prompt: "ad@scipnet:$>" 
+        },
+        "doraec@scipnet": { 
+            password: "ethicspass", 
+            clearance: 5, 
+            department: "Ethics Committee", 
+            prompt: "doraec@scipnet:$>" 
+        },
+        "EXPUNGED@scipnet": { 
+            password: "mtfpass", 
+            clearance: 4, 
+            department: "MTF", 
+            prompt: "EXPUNGED@scipnet:$>" 
+        },
+        "Bravo-7@scipnet": { 
+            password: "bravo7pass", 
+            clearance: 3, 
+            department: "MTF B-7", 
+            prompt: "Bravo-7@scipnet:$>" 
+        },
+        "Epsilon-11@scipnet": { 
+            password: "epsilon11pass", 
+            clearance: 3, 
+            department: "MTF E-11", 
+            prompt: "Epsilon-11@scipnet:$>" 
+        },
+        "Nu-7@scipnet": { 
+            password: "nu7pass", 
+            clearance: 3, 
+            department: "MTF N-7", 
+            prompt: "Nu-7@scipnet:$>" 
+        },
+        "admin@scipnet": { 
+            password: "o5pass", 
+            clearance: 6, 
+            department: "O5 Council", 
+            prompt: "admin@scipnet:$>" 
+        },
+        "Administrator@scipnet": { 
+            password: "ootapass", 
+            clearance: 6, 
+            department: "OoTA", 
+            prompt: "Administrator@scipnet:$>" 
+        },
+        "REDACTED@scipnet": { 
+            password: "isdpass", 
+            clearance: 5, 
+            department: "ISD", 
+            prompt: "REDACTED@scipnet:$>" 
+        },
+        "CLASSIFIEDE@scipnet": { 
+            password: "iapass", 
+            clearance: 5, 
+            department: "IA", 
+            prompt: "CLASSIFIEDE@scipnet:$>" 
+        },
+        "FSD@scipnet": { 
+            password: "securitypass", 
+            clearance: 2, 
+            department: "Security", 
+            prompt: "FSD@scipnet:$>" 
+        }
+    };
 
-        // Clearance levels
-        const clearances = {
-            1: "Confidential",
-            2: "Restricted",
-            3: "Secret",
-            4: "Top Secret",
-            5: "Thaumiel",
-            6: "Omni"
-        };
+    // Clearance levels
+    const clearances = {
+        1: "Confidential",
+        2: "Restricted",
+        3: "Secret",
+        4: "Top Secret",
+        5: "Thaumiel",
+        6: "Omni"
+    };
 
-        window.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('violation-modal').classList.add('hidden');
-});
+    // Email database
+    let emails = JSON.parse(localStorage.getItem('scipnet_emails')) || {};
+    
+    // Personnel records with violations
+    let personnelRecords = JSON.parse(localStorage.getItem('scipnet_personnel')) || {
+        "ad@scipnet": { violations: [], department: "Administrative", clearance: 5 },
+        "doraec@scipnet": { violations: [], department: "Ethics Committee", clearance: 5 },
+        "EXPUNGED@scipnet": { violations: [], department: "MTF", clearance: 4 },
+        "Bravo-7@scipnet": { violations: [], department: "MTF B-7", clearance: 3 },
+        "Epsilon-11@scipnet": { violations: [], department: "MTF E-11", clearance: 3 },
+        "Nu-7@scipnet": { violations: [], department: "MTF N-7", clearance: 3 },
+        "admin@scipnet": { violations: [], department: "O5 Council", clearance: 6 },
+        "Administrator@scipnet": { violations: [], department: "OoTA", clearance: 6 },
+        "REDACTED@scipnet": { violations: [], department: "ISD", clearance: 5 },
+        "CLASSIFIEDE@scipnet": { violations: [], department: "IA", clearance: 5 },
+        "FSD@scipnet": { violations: [], department: "Security", clearance: 2 }
+    };
 
-// Also hide it after everything loads
-window.addEventListener('load', function() {
-    document.getElementById('violation-modal').classList.add('hidden');
-});
-
-
-        // Email database
-        let emails = JSON.parse(localStorage.getItem('scipnet_emails')) || {};
-        
-        // Personnel records with violations
-        let personnelRecords = JSON.parse(localStorage.getItem('scipnet_personnel')) || {
-            "ad@scipnet": { violations: [], department: "Administrative", clearance: 5 },
-            "doraec@scipnet": { violations: [], department: "Ethics Committee", clearance: 5 },
-            "EXPUNGED@scipnet": { violations: [], department: "MTF", clearance: 4 },
-            "Bravo-7@scipnet": { violations: [], department: "MTF B-7", clearance: 3 },
-            "Epsilon-11@scipnet": { violations: [], department: "MTF E-11", clearance: 3 },
-            "Nu-7@scipnet": { violations: [], department: "MTF N-7", clearance: 3 },
-            "admin@scipnet": { violations: [], department: "O5 Council", clearance: 6 },
-            "Administrator@scipnet": { violations: [], department: "OoTA", clearance: 6 },
-            "REDACTED@scipnet": { violations: [], department: "ISD", clearance: 5 },
-            "CLASSIFIEDE@scipnet": { violations: [], department: "IA", clearance: 5 },
-            "FSD@scipnet": { violations: [], department: "Security", clearance: 2 }
-        };
-
-  // Current user state
+    // Current user state
     let currentUser = null;
     let currentPrompt = "guest@scipnet:~$";
 
@@ -812,614 +799,606 @@ window.addEventListener('load', function() {
     const violationModal = document.getElementById('violation-modal');
     const clearanceBadge = document.getElementById('clearance-badge');
 
-    // Immediately hide the violation modal
-    violationModal.classList.add('hidden');
-    personnelModal.classList.add('hidden');
+    // Initialize the terminal
+    function initTerminal() {
+        commandInput.addEventListener('keydown', handleCommandInput);
+        setupModalEventListeners();
+        
+        // Hide all modals on startup
+        hideAllModals();
+        
+        // Load any saved emails for the current user if logged in
+        if (currentUser) {
+            loadEmails();
+        }
+        
+        // Load users and personnel from localStorage if available
+        loadSavedData();
+    }
 
-// Initialize the terminal
-function initTerminal() {
-    commandInput.addEventListener('keydown', handleCommandInput);
-    setupModalEventListeners();
-    
-    // Hide all modals on startup (just once)
-    document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-    
-    // Extra protection for problematic modals
-    setTimeout(() => {
-        violationModal.classList.add('hidden');
+    // Hide all modals
+    function hideAllModals() {
+        loginModal.classList.add('hidden');
+        adduserModal.classList.add('hidden');
+        emailModal.classList.add('hidden');
+        inboxModal.classList.add('hidden');
         personnelModal.classList.add('hidden');
-    }, 50);
-}
-            
-            // Load any saved emails for the current user if logged in
-            if (currentUser) {
-                loadEmails();
-            }
-            
-            // Load users and personnel from localStorage if available
-            loadSavedData();
-            
-            // Make sure all modals are hidden on startup
-            hideAllModals();
-        }
+        violationModal.classList.add('hidden');
+    }
 
-        // Hide all modals
-        function hideAllModals() {
-            loginModal.classList.add('hidden');
-            adduserModal.classList.add('hidden');
-            emailModal.classList.add('hidden');
-            inboxModal.classList.add('hidden');
-            personnelModal.classList.add('hidden');
-            violationModal.classList.add('hidden');
+    // Load saved data from localStorage
+    function loadSavedData() {
+        const savedUsers = localStorage.getItem('scipnet_users');
+        const savedPersonnel = localStorage.getItem('scipnet_personnel');
+        
+        if (savedUsers) {
+            const parsedUsers = JSON.parse(savedUsers);
+            // Merge with default users (default users take precedence)
+            Object.assign(users, parsedUsers);
         }
-
-        // Load saved data from localStorage
-        function loadSavedData() {
-            const savedUsers = localStorage.getItem('scipnet_users');
-            const savedPersonnel = localStorage.getItem('scipnet_personnel');
-            
-            if (savedUsers) {
-                const parsedUsers = JSON.parse(savedUsers);
-                // Merge with default users (default users take precedence)
-                Object.assign(users, parsedUsers);
-            }
-            
-            if (savedPersonnel) {
-                const parsedPersonnel = JSON.parse(savedPersonnel);
-                // Merge with default personnel records
-                Object.assign(personnelRecords, parsedPersonnel);
-            }
+        
+        if (savedPersonnel) {
+            const parsedPersonnel = JSON.parse(savedPersonnel);
+            // Merge with default personnel records
+            Object.assign(personnelRecords, parsedPersonnel);
         }
+    }
 
-        // Save users and personnel to localStorage
-        function saveData() {
-            localStorage.setItem('scipnet_users', JSON.stringify(users));
-            localStorage.setItem('scipnet_personnel', JSON.stringify(personnelRecords));
-        }
+    // Save users and personnel to localStorage
+    function saveData() {
+        localStorage.setItem('scipnet_users', JSON.stringify(users));
+        localStorage.setItem('scipnet_personnel', JSON.stringify(personnelRecords));
+    }
 
-        // Set up modal event listeners
-        function setupModalEventListeners() {
-            //fix for personnel search modal
-            document.getElementById('close-personnel').addEventListener('click', function(e) {
+    // Set up modal event listeners
+    function setupModalEventListeners() {
+        // Login modal
+        document.getElementById('submit-login').addEventListener('click', handleLogin);
+        document.getElementById('close-login').addEventListener('click', () => loginModal.classList.add('hidden'));
+        
+        // Add User modal
+        document.getElementById('submit-adduser').addEventListener('click', addNewUser);
+        document.getElementById('cancel-adduser').addEventListener('click', () => adduserModal.classList.add('hidden'));
+        document.getElementById('close-adduser').addEventListener('click', () => adduserModal.classList.add('hidden'));
+        
+        // Email modal
+        document.getElementById('send-email').addEventListener('click', sendEmail);
+        document.getElementById('cancel-email').addEventListener('click', () => emailModal.classList.add('hidden'));
+        document.getElementById('close-email').addEventListener('click', () => emailModal.classList.add('hidden'));
+        
+        // Inbox modal
+        document.getElementById('close-inbox').addEventListener('click', () => inboxModal.classList.add('hidden'));
+        
+        // Personnel modal
+        document.getElementById('close-personnel').addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             personnelModal.classList.add('hidden');
-         });
-            // Login modal
-            document.getElementById('submit-login').addEventListener('click', handleLogin);
-            document.getElementById('close-login').addEventListener('click', () => loginModal.classList.add('hidden'));
-            
-            // Add User modal
-            document.getElementById('submit-adduser').addEventListener('click', addNewUser);
-            document.getElementById('cancel-adduser').addEventListener('click', () => adduserModal.classList.add('hidden'));
-            document.getElementById('close-adduser').addEventListener('click', () => adduserModal.classList.add('hidden'));
-            
-            // Email modal
-            document.getElementById('send-email').addEventListener('click', sendEmail);
-            document.getElementById('cancel-email').addEventListener('click', () => emailModal.classList.add('hidden'));
-            document.getElementById('close-email').addEventListener('click', () => emailModal.classList.add('hidden'));
-            
-            // Inbox modal
-            document.getElementById('close-inbox').addEventListener('click', () => inboxModal.classList.add('hidden'));
-            
-            // Personnel modal
-            document.getElementById('close-personnel').addEventListener('click', () => personnelModal.classList.add('hidden'));
-            document.getElementById('search-personnel-btn').addEventListener('click', searchPersonnel);
-            
-            // Violation modal
-            document.getElementById('close-violation').addEventListener('click', () => violationModal.classList.add('hidden'));
-            document.getElementById('cancel-violation').addEventListener('click', () => violationModal.classList.add('hidden'));
-            document.getElementById('submit-violation').addEventListener('click', addViolation);
-        }
+        });
+        document.getElementById('search-personnel-btn').addEventListener('click', searchPersonnel);
+        
+        // Violation modal
+        document.getElementById('close-violation').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            violationModal.classList.add('hidden');
+        });
+        document.getElementById('cancel-violation').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            violationModal.classList.add('hidden');
+        });
+        document.getElementById('submit-violation').addEventListener('click', addViolation);
+    }
 
-        // Handle command input
-        function handleCommandInput(e) {
-            if (e.key === 'Enter') {
-                const command = commandInput.value.trim();
-                commandInput.value = '';
+    // Handle command input
+    function handleCommandInput(e) {
+        if (e.key === 'Enter') {
+            const command = commandInput.value.trim();
+            commandInput.value = '';
+            
+            addOutputLine(`${currentPrompt} ${command}`);
+            
+            if (command) {
+                processCommand(command);
+            }
+            
+            // Scroll to bottom
+            outputElement.scrollTop = outputElement.scrollHeight;
+        }
+    }
+
+    // Process commands
+    function processCommand(command) {
+        const parts = command.split(' ');
+        const cmd = parts[0].toLowerCase();
+        const args = parts.slice(1);
+        
+        switch(cmd) {
+            case 'login':
+                if (currentUser) {
+                    addOutputLine(`Already logged in as ${currentUser}`);
+                } else {
+                    loginModal.classList.remove('hidden');
+                }
+                break;
                 
-                addOutputLine(`${currentPrompt} ${command}`);
+            case 'logout':
+                if (currentUser) {
+                    addOutputLine(`Logging out user ${currentUser}`);
+                    currentUser = null;
+                    currentPrompt = "guest@scipnet:~$";
+                    clearanceBadge.textContent = "UNAUTHORIZED";
+                } else {
+                    addOutputLine("Not currently logged in");
+                }
+                break;
                 
-                if (command) {
-                    processCommand(command);
+            case 'adduser':
+                if (!currentUser) {
+                    addOutputLine("Access denied. Authentication required.");
+                    return;
                 }
                 
-                // Scroll to bottom
-                outputElement.scrollTop = outputElement.scrollHeight;
-            }
-        }
-
-        // Process commands
-        function processCommand(command) {
-            const parts = command.split(' ');
-            const cmd = parts[0].toLowerCase();
-            const args = parts.slice(1);
-            
-            switch(cmd) {
-                case 'login':
-                    if (currentUser) {
-                        addOutputLine(`Already logged in as ${currentUser}`);
-                    } else {
-                        loginModal.classList.remove('hidden');
-                    }
-                    break;
-                    
-                case 'logout':
-                    if (currentUser) {
-                        addOutputLine(`Logging out user ${currentUser}`);
-                        currentUser = null;
-                        currentPrompt = "guest@scipnet:~$";
-                        clearanceBadge.textContent = "UNAUTHORIZED";
-                    } else {
-                        addOutputLine("Not currently logged in");
-                    }
-                    break;
-                    
-                case 'adduser':
-                    if (!currentUser) {
-                        addOutputLine("Access denied. Authentication required.");
-                        return;
-                    }
-                    
-                    // Check if user has clearance for adding users
-                    const userData = users[currentUser];
-                    if (userData.clearance >= 4) { // Level 4 (Top Secret) and above can add users
-                        adduserModal.classList.remove('hidden');
-                    } else {
-                        addOutputLine("Access denied. Insufficient clearance for user management.");
-                    }
-                    break;
-                    
-                case 'e-lockout':
-                    if (currentUser) {
-                        addOutputLine("Initiating emergency lockout procedure...");
-                        addOutputLine("All non-essential systems disabled.");
-                        addOutputLine("Security protocols engaged.");
-                    } else {
-                        addOutputLine("Access denied. Authentication required.");
-                    }
-                    break;
-                    
-                case 'email':
-                    if (!currentUser) {
-                        addOutputLine("Access denied. Authentication required.");
-                        return;
-                    }
-                    
-                    if (args.length === 0) {
-                        addOutputLine("Usage: email [send|inbox]");
-                        return;
-                    }
-                    
-                    if (args[0] === 'send') {
-                        emailModal.classList.remove('hidden');
-                    } else if (args[0] === 'inbox') {
-                        showInbox();
-                    } else {
-                        addOutputLine("Invalid email command. Usage: email [send|inbox]");
-                    }
-                    break;
-                    
-                case 'lookup':
-                    if (!currentUser) {
-                        addOutputLine("Access denied. Authentication required.");
-                        return;
-                    }
-                    
-                    // Check if user has clearance for personnel lookup
-                    const lookupUserData = users[currentUser];
-                    if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
-                         'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser) || lookupUserData.clearance >= 4) {
-                        personnelModal.classList.remove('hidden');
-                    } else {
-                        addOutputLine("Access denied. Insufficient clearance for personnel records.");
-                    }
-                    break;
-                    
-                case 'access':
-                    if (!currentUser) {
-                        addOutputLine("Access denied. Authentication required.");
-                        return;
-                    }
-                    
-                    if (args.length === 0) {
-                        addOutputLine("Usage: access [SCP designation]");
-                        addOutputLine("Example: access SCP-173");
-                        return;
-                    }
-                    
-                    const scpDesignation = args[0].toUpperCase();
-                    searchSCP(scpDesignation);
-                    break;
-                    
-                case 'clear':
-                    outputElement.innerHTML = '';
-                    break;
-                    
-                case 'help':
-                    showHelp();
-                    break;
-                    
-                default:
-                    addOutputLine(`Command not found: ${cmd}`);
-            }
-        }
-
-        // Handle login
-        function handleLogin() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            if (users[username] && users[username].password === password) {
-                currentUser = username;
-                currentPrompt = users[username].prompt;
+                // Check if user has clearance for adding users
+                const userData = users[currentUser];
+                if (userData.clearance >= 4) { // Level 4 (Top Secret) and above can add users
+                    adduserModal.classList.remove('hidden');
+                } else {
+                    addOutputLine("Access denied. Insufficient clearance for user management.");
+                }
+                break;
                 
-                // Update clearance badge
-                const clearanceLevel = users[username].clearance;
-                clearanceBadge.textContent = clearances[clearanceLevel];
+            case 'e-lockout':
+                if (currentUser) {
+                    addOutputLine("Initiating emergency lockout procedure...");
+                    addOutputLine("All non-essential systems disabled.");
+                    addOutputLine("Security protocols engaged.");
+                } else {
+                    addOutputLine("Access denied. Authentication required.");
+                }
+                break;
                 
-                addOutputLine(`Authentication successful. Welcome, ${username}`);
-                addOutputLine(`Clearance level: ${clearances[clearanceLevel]}`);
+            case 'email':
+                if (!currentUser) {
+                    addOutputLine("Access denied. Authentication required.");
+                    return;
+                }
                 
-                // Load user's emails
-                loadEmails();
+                if (args.length === 0) {
+                    addOutputLine("Usage: email [send|inbox]");
+                    return;
+                }
                 
-                loginModal.classList.add('hidden');
+                if (args[0] === 'send') {
+                    emailModal.classList.remove('hidden');
+                } else if (args[0] === 'inbox') {
+                    showInbox();
+                } else {
+                    addOutputLine("Invalid email command. Usage: email [send|inbox]");
+                }
+                break;
                 
-                // Clear login form
-                document.getElementById('username').value = '';
-                document.getElementById('password').value = '';
-            } else {
-                addOutputLine("Authentication failed. Invalid credentials.", "error");
-            }
+            case 'lookup':
+                if (!currentUser) {
+                    addOutputLine("Access denied. Authentication required.");
+                    return;
+                }
+                
+                // Check if user has clearance for personnel lookup
+                const lookupUserData = users[currentUser];
+                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
+                     'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser) || lookupUserData.clearance >= 4) {
+                    personnelModal.classList.remove('hidden');
+                } else {
+                    addOutputLine("Access denied. Insufficient clearance for personnel records.");
+                }
+                break;
+                
+            case 'access':
+                if (!currentUser) {
+                    addOutputLine("Access denied. Authentication required.");
+                    return;
+                }
+                
+                if (args.length === 0) {
+                    addOutputLine("Usage: access [SCP designation]");
+                    addOutputLine("Example: access SCP-173");
+                    return;
+                }
+                
+                const scpDesignation = args[0].toUpperCase();
+                searchSCP(scpDesignation);
+                break;
+                
+            case 'clear':
+                outputElement.innerHTML = '';
+                break;
+                
+            case 'help':
+                showHelp();
+                break;
+                
+            default:
+                addOutputLine(`Command not found: ${cmd}`);
         }
+    }
 
-        // Add new user
-        function addNewUser() {
-            const username = document.getElementById('new-username').value;
-            const password = document.getElementById('new-password').value;
-            const clearance = parseInt(document.getElementById('new-clearance').value);
-            const department = document.getElementById('new-department').value;
-            const prompt = document.getElementById('new-prompt').value;
+    // Handle login
+    function handleLogin() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        if (users[username] && users[username].password === password) {
+            currentUser = username;
+            currentPrompt = users[username].prompt;
             
-            if (!username || !password) {
-                addOutputLine("Error: Username and password are required.", "error");
-                return;
-            }
+            // Update clearance badge
+            const clearanceLevel = users[username].clearance;
+            clearanceBadge.textContent = clearances[clearanceLevel];
             
-            if (users[username]) {
-                addOutputLine(`Error: User ${username} already exists.`, "error");
-                return;
-            }
+            addOutputLine(`Authentication successful. Welcome, ${username}`);
+            addOutputLine(`Clearance level: ${clearances[clearanceLevel]}`);
             
-            // Add user to users database
-            users[username] = {
-                password: password,
-                clearance: clearance,
-                department: department,
-                prompt: prompt || `${username.split('@')[0]}@scipnet:$>`
-            };
+            // Load user's emails
+            loadEmails();
             
-            // Create personnel record for the new user
-            personnelRecords[username] = {
-                violations: [],
-                department: department,
-                clearance: clearance
-            };
+            loginModal.classList.add('hidden');
             
-            // Save to localStorage
-            saveData();
-            
-            addOutputLine(`User ${username} added successfully.`);
-            addOutputLine(`Department: ${department}, Clearance: ${clearances[clearance]}`);
-            
-            // Clear form and close modal
-            document.getElementById('new-username').value = '';
-            document.getElementById('new-password').value = '';
-            document.getElementById('new-prompt').value = '';
-            adduserModal.classList.add('hidden');
+            // Clear login form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        } else {
+            addOutputLine("Authentication failed. Invalid credentials.", "error");
         }
+    }
 
-        // Send email
-        function sendEmail() {
-            const recipient = document.getElementById('recipient').value;
-            const subject = document.getElementById('subject').value;
-            const classification = document.getElementById('classification').value;
-            const priority = document.getElementById('priority').value;
-            const message = document.getElementById('message').value;
-            
-            if (!recipient || !subject || !message) {
-                addOutputLine("Error: All fields are required.", "error");
-                return;
-            }
-            
-            // Check if recipient exists
-            if (!users[recipient]) {
-                addOutputLine(`Error: Recipient ${recipient} not found.`, "error");
-                return;
-            }
-            
-            // Create email object
-            const email = {
-                from: currentUser,
-                to: recipient,
-                subject,
-                classification,
-                priority,
-                message,
-                timestamp: new Date().toISOString()
-            };
-            
-            // Save to emails database
-            if (!emails[recipient]) {
-                emails[recipient] = [];
-            }
-            emails[recipient].push(email);
-            
-            // Save to localStorage
-            localStorage.setItem('scipnet_emails', JSON.stringify(emails));
-            
-            addOutputLine(`Message sent to ${recipient} successfully.`);
-            
-            // Clear form and close modal
-            document.getElementById('recipient').value = '';
-            document.getElementById('subject').value = '';
-            document.getElementById('message').value = '';
-            emailModal.classList.add('hidden');
+    // Add new user
+    function addNewUser() {
+        const username = document.getElementById('new-username').value;
+        const password = document.getElementById('new-password').value;
+        const clearance = parseInt(document.getElementById('new-clearance').value);
+        const department = document.getElementById('new-department').value;
+        const prompt = document.getElementById('new-prompt').value;
+        
+        if (!username || !password) {
+            addOutputLine("Error: Username and password are required.", "error");
+            return;
         }
-
-        // Load emails for current user
-        function loadEmails() {
-            if (!emails[currentUser]) {
-                emails[currentUser] = [];
-            }
+        
+        if (users[username]) {
+            addOutputLine(`Error: User ${username} already exists.`, "error");
+            return;
         }
+        
+        // Add user to users database
+        users[username] = {
+            password: password,
+            clearance: clearance,
+            department: department,
+            prompt: prompt || `${username.split('@')[0]}@scipnet:$>`
+        };
+        
+        // Create personnel record for the new user
+        personnelRecords[username] = {
+            violations: [],
+            department: department,
+            clearance: clearance
+        };
+        
+        // Save to localStorage
+        saveData();
+        
+        addOutputLine(`User ${username} added successfully.`);
+        addOutputLine(`Department: ${department}, Clearance: ${clearances[clearance]}`);
+        
+        // Clear form and close modal
+        document.getElementById('new-username').value = '';
+        document.getElementById('new-password').value = '';
+        document.getElementById('new-prompt').value = '';
+        adduserModal.classList.add('hidden');
+    }
 
-        // Show inbox
-        function showInbox() {
-            const emailList = document.getElementById('email-list');
-            emailList.innerHTML = '';
-            
-            if (!emails[currentUser] || emails[currentUser].length === 0) {
-                emailList.innerHTML = '<div class="email-item">No messages</div>';
-            } else {
-                emails[currentUser].forEach((email, index) => {
-                    const emailItem = document.createElement('div');
-                    emailItem.className = 'email-item';
-                    emailItem.innerHTML = `
-                        <div class="email-subject">${email.subject}</div>
-                        <div class="email-metadata">
-                            <span>From: ${email.from}</span>
-                            <span class="email-priority priority-${email.priority.toLowerCase()}">${email.priority}</span>
-                        </div>
-                        <div class="email-metadata">
-                            <span>${new Date(email.timestamp).toLocaleString()}</span>
-                            <span>${email.classification}</span>
-                        </div>
-                    `;
-                    
-                    emailItem.addEventListener('click', () => {
-                        alert(`From: ${email.from}\nSubject: ${email.subject}\nClassification: ${email.classification}\n\n${email.message}`);
-                    });
-                    
-                    emailList.appendChild(emailItem);
-                });
-            }
-            
-            inboxModal.classList.remove('hidden');
+    // Send email
+    function sendEmail() {
+        const recipient = document.getElementById('recipient').value;
+        const subject = document.getElementById('subject').value;
+        const classification = document.getElementById('classification').value;
+        const priority = document.getElementById('priority').value;
+        const message = document.getElementById('message').value;
+        
+        if (!recipient || !subject || !message) {
+            addOutputLine("Error: All fields are required.", "error");
+            return;
         }
+        
+        // Check if recipient exists
+        if (!users[recipient]) {
+            addOutputLine(`Error: Recipient ${recipient} not found.`, "error");
+            return;
+        }
+        
+        // Create email object
+        const email = {
+            from: currentUser,
+            to: recipient,
+            subject,
+            classification,
+            priority,
+            message,
+            timestamp: new Date().toISOString()
+        };
+        
+        // Save to emails database
+        if (!emails[recipient]) {
+            emails[recipient] = [];
+        }
+        emails[recipient].push(email);
+        
+        // Save to localStorage
+        localStorage.setItem('scipnet_emails', JSON.stringify(emails));
+        
+        addOutputLine(`Message sent to ${recipient} successfully.`);
+        
+        // Clear form and close modal
+        document.getElementById('recipient').value = '';
+        document.getElementById('subject').value = '';
+        document.getElementById('message').value = '';
+        emailModal.classList.add('hidden');
+    }
 
-        // Search personnel
-        function searchPersonnel() {
-            const searchTerm = document.getElementById('search-personnel').value;
-            const resultsDiv = document.getElementById('personnel-results');
-            
-            resultsDiv.innerHTML = '';
-            
-            if (!searchTerm) {
-                resultsDiv.innerHTML = '<div class="output-line error">Please enter a search term</div>';
-                return;
-            }
-            
-            // Find matching users
-            const matches = Object.keys(users).filter(username => 
-                username.includes(searchTerm) || users[username].department.includes(searchTerm)
-            );
-            
-            if (matches.length === 0) {
-                resultsDiv.innerHTML = '<div class="output-line">No personnel found</div>';
-                return;
-            }
-            
-            matches.forEach(username => {
-                const user = users[username];
-                const record = personnelRecords[username] || { violations: [] };
-                
-                // Determine department class for styling
-                let deptClass = 'dept-other';
-                if (user.department.includes('Administrative')) deptClass = 'dept-admin';
-                else if (user.department.includes('Ethics')) deptClass = 'dept-ethics';
-                else if (user.department.includes('MTF') || user.department.includes('Mobile Task Force')) deptClass = 'dept-mtf';
-                else if (user.department.includes('Security')) deptClass = 'dept-security';
-                
-                const recordDiv = document.createElement('div');
-                recordDiv.className = 'record-container';
-                recordDiv.innerHTML = `
-                    <div class="record-header">
-                        <h3 class="${deptClass}">${username}</h3>
-                        <span>Clearance: ${clearances[user.clearance]}</span>
+    // Load emails for current user
+    function loadEmails() {
+        if (!emails[currentUser]) {
+            emails[currentUser] = [];
+        }
+    }
+
+    // Show inbox
+    function showInbox() {
+        const emailList = document.getElementById('email-list');
+        emailList.innerHTML = '';
+        
+        if (!emails[currentUser] || emails[currentUser].length === 0) {
+            emailList.innerHTML = '<div class="email-item">No messages</div>';
+        } else {
+            emails[currentUser].forEach((email, index) => {
+                const emailItem = document.createElement('div');
+                emailItem.className = 'email-item';
+                emailItem.innerHTML = `
+                    <div class="email-subject">${email.subject}</div>
+                    <div class="email-metadata">
+                        <span>From: ${email.from}</span>
+                        <span class="email-priority priority-${email.priority.toLowerCase()}">${email.priority}</span>
                     </div>
-                    <div class="record-field">
-                        <label>Department:</label> <span class="${deptClass}">${user.department}</span>
-                    </div>
-                    <div class="record-field">
-                        <label>Email:</label> ${username}
-                    </div>
-                    <div class="violations-list">
-                        <h4>Security Violations (${record.violations.length})</h4>
-                        ${record.violations.map(violation => `
-                            <div class="violation-item">
-                                <span class="violation-class class-${violation.class.toLowerCase()}">${violation.class}</span>
-                                <span>${violation.reason}</span>
-                                <div class="email-metadata">
-                                    ${new Date(violation.timestamp).toLocaleString()}
-                                </div>
-                            </div>
-                        `).join('')}
+                    <div class="email-metadata">
+                        <span>${new Date(email.timestamp).toLocaleString()}</span>
+                        <span>${email.classification}</span>
                     </div>
                 `;
                 
-                // Add violation button for authorized users
-                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser) || users[currentUser].clearance >= 5) {
-                    const addButton = document.createElement('button');
-                    addButton.className = 'btn';
-                    addButton.textContent = 'Add Violation';
-                    addButton.addEventListener('click', () => {
-                        document.getElementById('violation-personnel').value = username;
-                        violationModal.classList.remove('hidden');
-                    });
-                    recordDiv.appendChild(addButton);
-                }
+                emailItem.addEventListener('click', () => {
+                    alert(`From: ${email.from}\nSubject: ${email.subject}\nClassification: ${email.classification}\n\n${email.message}`);
+                });
                 
-                resultsDiv.appendChild(recordDiv);
+                emailList.appendChild(emailItem);
             });
         }
+        
+        inboxModal.classList.remove('hidden');
+    }
 
-        // Add violation to personnel record
-        function addViolation() {
-            const personnel = document.getElementById('violation-personnel').value;
-            const violationClass = document.getElementById('violation-class').value;
-            const reason = document.getElementById('violation-reason').value;
+    // Search personnel
+    function searchPersonnel() {
+        const searchTerm = document.getElementById('search-personnel').value;
+        const resultsDiv = document.getElementById('personnel-results');
+        
+        resultsDiv.innerHTML = '';
+        
+        if (!searchTerm) {
+            resultsDiv.innerHTML = '<div class="output-line error">Please enter a search term</div>';
+            return;
+        }
+        
+        // Find matching users
+        const matches = Object.keys(users).filter(username => 
+            username.includes(searchTerm) || users[username].department.includes(searchTerm)
+        );
+        
+        if (matches.length === 0) {
+            resultsDiv.innerHTML = '<div class="output-line">No personnel found</div>';
+            return;
+        }
+        
+        matches.forEach(username => {
+            const user = users[username];
+            const record = personnelRecords[username] || { violations: [] };
             
-            if (reason.length < 8) {
-                alert("Reason must be at least 8 characters long.");
-                return;
+            // Determine department class for styling
+            let deptClass = 'dept-other';
+            if (user.department.includes('Administrative')) deptClass = 'dept-admin';
+            else if (user.department.includes('Ethics')) deptClass = 'dept-ethics';
+            else if (user.department.includes('MTF') || user.department.includes('Mobile Task Force')) deptClass = 'dept-mtf';
+            else if (user.department.includes('Security')) deptClass = 'dept-security';
+            
+            const recordDiv = document.createElement('div');
+            recordDiv.className = 'record-container';
+            recordDiv.innerHTML = `
+                <div class="record-header">
+                    <h3 class="${deptClass}">${username}</h3>
+                    <span>Clearance: ${clearances[user.clearance]}</span>
+                </div>
+                <div class="record-field">
+                    <label>Department:</label> <span class="${deptClass}">${user.department}</span>
+                </div>
+                <div class="record-field">
+                    <label>Email:</label> ${username}
+                </div>
+                <div class="violations-list">
+                    <h4>Security Violations (${record.violations.length})</h4>
+                    ${record.violations.map(violation => `
+                        <div class="violation-item">
+                            <span class="violation-class class-${violation.class.toLowerCase()}">${violation.class}</span>
+                            <span>${violation.reason}</span>
+                            <div class="email-metadata">
+                                ${new Date(violation.timestamp).toLocaleString()}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Add violation button for authorized users
+            if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser) || users[currentUser].clearance >= 5) {
+                const addButton = document.createElement('button');
+                addButton.className = 'btn';
+                addButton.textContent = 'Add Violation';
+                addButton.addEventListener('click', () => {
+                    document.getElementById('violation-personnel').value = username;
+                    violationModal.classList.remove('hidden');
+                });
+                recordDiv.appendChild(addButton);
             }
             
-            // Initialize personnel record if it doesn't exist
-            if (!personnelRecords[personnel]) {
-                personnelRecords[personnel] = { violations: [] };
+            resultsDiv.appendChild(recordDiv);
+        });
+    }
+
+    // Add violation to personnel record
+    function addViolation() {
+        const personnel = document.getElementById('violation-personnel').value;
+        const violationClass = document.getElementById('violation-class').value;
+        const reason = document.getElementById('violation-reason').value;
+        
+        if (reason.length < 8) {
+            alert("Reason must be at least 8 characters long.");
+            return;
+        }
+        
+        // Initialize personnel record if it doesn't exist
+        if (!personnelRecords[personnel]) {
+            personnelRecords[personnel] = { violations: [] };
+        }
+        
+        // Add violation
+        personnelRecords[personnel].violations.push({
+            class: violationClass,
+            reason,
+            timestamp: new Date().toISOString(),
+            addedBy: currentUser
+        });
+        
+        // Save to localStorage
+        saveData();
+        
+        addOutputLine(`Added ${violationClass} violation to ${personnel}'s record.`);
+        
+        // Clear form and close modal
+        document.getElementById('violation-personnel').value = '';
+        document.getElementById('violation-reason').value = '';
+        violationModal.classList.add('hidden');
+        
+        // Refresh search results if personnel modal is open
+        if (!personnelModal.classList.contains('hidden')) {
+            searchPersonnel();
+        }
+    }
+
+    // Search SCP (simulated)
+    function searchSCP(designation) {
+        addOutputLine(`Accessing SCP Foundation database...`);
+        addOutputLine(`Searching for ${designation}...`);
+        
+        // Simulate loading
+        setTimeout(() => {
+            // Mock SCP data
+            const scpData = {
+                "SCP-173": {
+                    class: "Euclid",
+                    title: "The Sculpture",
+                    description: "SCP-173 is a concrete statue that is animate and extremely hostile. The object cannot move while within a direct line of sight. Line of sight must not be broken at any time with SCP-173."
+                },
+                "SCP-049": {
+                    class: "Euclid",
+                    title: "The Plague Doctor",
+                    description: "SCP-049 is a humanoid entity that believes it can 'cure' the pestilence it perceives in humans. Its touch is invariably fatal to humans."
+                },
+                "SCP-096": {
+                    class: "Euclid",
+                    title: "The Shy Guy",
+                    description: "SCP-096 is a humanoid creature that becomes extremely aggressive if anyone views its face, either directly or via photographic representation."
+                },
+                "SCP-106": {
+                    class: "Keter",
+                    title: "The Old Man",
+                    description: "SCP-106 is a hostile humanoid entity that can phase through solid matter and drag victims into its pocket dimension."
+                },
+                "SCP-682": {
+                    class: "Keter",
+                    title: "The Hard-to-Destroy Reptile",
+                    description: "SCP-682 is a massive, reptilian creature that displays extreme hatred for all life and possesses incredible adaptability and regenerative abilities."
+                },
+                "SCP-999": {
+                    class: "Safe",
+                    title: "The Tickle Monster",
+                    description: "SCP-999 is an orange, gelatinous creature that exhibits a friendly and playful demeanor. It has a positive effect on those who come into contact with it."
+                }
+            };
+            
+            if (scpData[designation]) {
+                const scp = scpData[designation];
+                addOutputLine(`=== ${designation}: ${scp.title} ===`);
+                addOutputLine(`Object Class: ${scp.class}`);
+                addOutputLine(`Description: ${scp.description}`);
+            } else {
+                addOutputLine(`No record found for ${designation}.`, "error");
+            }
+        }, 1500);
+    }
+
+    // Show help
+    function showHelp() {
+        addOutputLine("=== SCiPNET Terminal Commands ===");
+        addOutputLine("login - Authenticate to the system");
+        
+        if (currentUser) {
+            const user = users[currentUser];
+            
+            if (user.clearance >= 4) {
+                addOutputLine("adduser - Add a new user to the system");
             }
             
-            // Add violation
-            personnelRecords[personnel].violations.push({
-                class: violationClass,
-                reason,
-                timestamp: new Date().toISOString(),
-                addedBy: currentUser
-            });
+            addOutputLine("logout - End current session");
+            addOutputLine("e-lockout - Initiate emergency lockdown");
+            addOutputLine("email send - Compose a new message");
+            addOutputLine("email inbox - View received messages");
             
-            // Save to localStorage
-            saveData();
-            
-            addOutputLine(`Added ${violationClass} violation to ${personnel}'s record.`);
-            
-            // Clear form and close modal
-            document.getElementById('violation-personnel').value = '';
-            document.getElementById('violation-reason').value = '';
-            violationModal.classList.add('hidden');
-            
-            // Refresh search results if personnel modal is open
-            if (!personnelModal.classList.contains('hidden')) {
-                searchPersonnel();
-            }
-        }
-
-        // Search SCP (simulated)
-        function searchSCP(designation) {
-            addOutputLine(`Accessing SCP Foundation database...`);
-            addOutputLine(`Searching for ${designation}...`);
-            
-            // Simulate loading
-            setTimeout(() => {
-                // Mock SCP data
-                const scpData = {
-                    "SCP-173": {
-                        class: "Euclid",
-                        title: "The Sculpture",
-                        description: "SCP-173 is a concrete statue that is animate and extremely hostile. The object cannot move while within a direct line of sight. Line of sight must not be broken at any time with SCP-173."
-                    },
-                    "SCP-049": {
-                        class: "Euclid",
-                        title: "The Plague Doctor",
-                        description: "SCP-049 is a humanoid entity that believes it can 'cure' the pestilence it perceives in humans. Its touch is invariably fatal to humans."
-                    },
-                    "SCP-096": {
-                        class: "Euclid",
-                        title: "The Shy Guy",
-                        description: "SCP-096 is a humanoid creature that becomes extremely aggressive if anyone views its face, either directly or via photographic representation."
-                    },
-                    "SCP-106": {
-                        class: "Keter",
-                        title: "The Old Man",
-                        description: "SCP-106 is a hostile humanoid entity that can phase through solid matter and drag victims into its pocket dimension."
-                    },
-                    "SCP-682": {
-                        class: "Keter",
-                        title: "The Hard-to-Destroy Reptile",
-                        description: "SCP-682 is a massive, reptilian creature that displays extreme hatred for all life and possesses incredible adaptability and regenerative abilities."
-                    },
-                    "SCP-999": {
-                        class: "Safe",
-                        title: "The Tickle Monster",
-                        description: "SCP-999 is an orange, gelatinous creature that exhibits a friendly and playful demeanor. It has a positive effect on those who come into contact with it."
-                    }
-                };
-                
-                if (scpData[designation]) {
-                    const scp = scpData[designation];
-                    addOutputLine(`=== ${designation}: ${scp.title} ===`);
-                    addOutputLine(`Object Class: ${scp.class}`);
-                    addOutputLine(`Description: ${scp.description}`);
-                } else {
-                    addOutputLine(`No record found for ${designation}.`, "error");
-                }
-            }, 1500);
-        }
-
-        // Show help
-        function showHelp() {
-            addOutputLine("=== SCiPNET Terminal Commands ===");
-            addOutputLine("login - Authenticate to the system");
-            
-            if (currentUser) {
-                const user = users[currentUser];
-                
-                if (user.clearance >= 4) {
-                    addOutputLine("adduser - Add a new user to the system");
-                }
-                
-                addOutputLine("logout - End current session");
-                addOutputLine("e-lockout - Initiate emergency lockdown");
-                addOutputLine("email send - Compose a new message");
-                addOutputLine("email inbox - View received messages");
-                
-                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
-                     'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser) || user.clearance >= 4) {
-                    addOutputLine("lookup - Search personnel records");
-                }
-                
-                if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser) || user.clearance >= 5) {
-                    addOutputLine("addviolation - Add security violation to personnel record");
-                }
-                
-                addOutputLine("access [SCP] - Retrieve SCP documentation");
+            if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet', 
+                 'REDACTED@scipnet', 'CLASSIFIEDE@scipnet'].includes(currentUser) || user.clearance >= 4) {
+                addOutputLine("lookup - Search personnel records");
             }
             
-            addOutputLine("clear - Clear terminal output");
-            addOutputLine("help - Display this help message");
+            if (['doraec@scipnet', 'ad@scipnet', 'Administrator@scipnet', 'admin@scipnet'].includes(currentUser) || user.clearance >= 5) {
+                addOutputLine("addviolation - Add security violation to personnel record");
+            }
+            
+            addOutputLine("access [SCP] - Retrieve SCP documentation");
         }
+        
+        addOutputLine("clear - Clear terminal output");
+        addOutputLine("help - Display this help message");
+    }
 
-        // Add output line to terminal
-        function addOutputLine(text, type = "") {
-            const line = document.createElement('div');
-            line.className = `output-line ${type}`;
-            line.textContent = text;
-            outputElement.appendChild(line);
-        }
+    // Add output line to terminal
+    function addOutputLine(text, type = "") {
+        const line = document.createElement('div');
+        line.className = `output-line ${type}`;
+        line.textContent = text;
+        outputElement.appendChild(line);
+    }
 
-        // Initialize the terminal when page loads
-        window.addEventListener('load', initTerminal);
-    </script>
+    // Initialize the terminal when page loads
+    window.addEventListener('load', initTerminal);
+</script>
 </body>
 </html>
