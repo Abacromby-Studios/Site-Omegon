@@ -769,6 +769,16 @@
             6: "Omni"
         };
 
+        window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('violation-modal').classList.add('hidden');
+});
+
+// Also hide it after everything loads
+window.addEventListener('load', function() {
+    document.getElementById('violation-modal').classList.add('hidden');
+});
+
+
         // Email database
         let emails = JSON.parse(localStorage.getItem('scipnet_emails')) || {};
         
