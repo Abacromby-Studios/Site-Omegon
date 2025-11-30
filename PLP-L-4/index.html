@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+i<!DOCTYPE html>
 <html>
 <head>
     <title>SCP Foundation Secure Login</title>
@@ -76,64 +76,67 @@
     <div class="container">
         <div class="login-box">
             <div class="logo">
-                <img src="https://cdn.discordapp.com/attachments/1303447019268079628/1320703350387376228/output-onlinepngtools_upscayl_4x_realesrgan-x4plus-anime.png?ex=676a9058&is=67693ed8&hm=f6e27e934522832d17c7f4ce05742d0affd68585e1639b7745d43dc9206c2fb1&" alt="SCP Foundation">
+                <img src="https://cdn.discordapp.com/attachments/1303447019268079628/1320703350387376228/output-onlinepngtools_upscayl_4x_realesrgan-x4plus-anime.png"
+                     alt="SCP Foundation">
             </div>
             <h1>L-4+ SECURE ACCESS TERMINAL</h1>
-            <div class="warning">
-                ⚠ AUTHORIZED PERSONNEL ONLY ⚠
-            </div>
+            <div class="warning">⚠ AUTHORIZED PERSONNEL ONLY ⚠</div>
+
             <form id="loginForm">
                 <input type="text" id="username" placeholder="Enter Credentials" required>
                 <input type="password" id="password" placeholder="Enter Security Phrase" required>
                 <button type="submit">AUTHENTICATE</button>
             </form>
+
             <div class="security-notice">
                 NOTICE: Unauthorized access will result in immediate termination. <br>
                 Security Level: TOP SECRET
             </div>
         </div>
     </div>
+
     <script>
         const users = {
-            MTF_E11_Sr_Op_Ensign: {
-                password: 'Mobile Task Force Epsilon-11 Senior Operative Ensign',
-                redirect: '/Epsilon-11-Dashboard'
+            "MTF_E11_Sr_Op_Ensign": {
+                password: "Mobile Task Force Epsilon-11 Senior Operative Ensign",
+                redirect: "/Epsilon-11-Dashboard"
             },
-            MTF_E11_Op_Ken: {
-                password: 'Mobile Task Force Epsilon-11 Operative Ken',
-                redirect: '/Epsilon-11-Dashboard'
+            "MTF_E11_Op_Ken": {
+                password: "Mobile Task Force Epsilon-11 Operative Ken",
+                redirect: "/Epsilon-11-Dashboard"
             },
-            MTF_E11_Sr_Op_Razor: {
-                password: 'Mobile Task Force Epsilon-11 Senior Operative Razor',
-                redirect: '/Epsilon-11-Dashboard'
+            "MTF_E11_Sr_Op_Razor": {
+                password: "Mobile Task Force Epsilon-11 Senior Operative Razor",
+                redirect: "/Epsilon-11-Dashboard"
             },
-            MTF_B7_Op_Ollie: {
-                password: 'Mobile Task Force Beta-7 Operative Ollie',
-                redirect: '/Beta-7-Dashboard'
+            "MTF_B7_Op_Ollie": {
+                password: "Mobile Task Force Beta-7 Operative Ollie",
+                redirect: "/Beta-7-Dashboard"
             },
-            MTF_E11_SrOp_Kat: {
-                password: 'Mobile Task Force Epsilon-11 Senior Operative Kat',
-                redirect: '/Epsilon-11-Dashboard'
+            "MTF_E11_SrOp_Kat": {
+                password: "Mobile Task Force Epsilon-11 Senior Operative Kat",
+                redirect: "/Epsilon-11-Dashboard"
             },
-            MTF_B7_Op_Vivdabagle: {
-                password: 'Mobile Task Force Beta-7 Vivdabagle',
-                redirect: '/Beta-7-Dashboard'
+            "MTF_B7_Op_Vivdabagle": {
+                password: "Mobile Task Force Beta-7 Vivdabagle",
+                redirect: "/Beta-7-Dashboard"
             },
-            MTF_N7_SrOp_Debzii: {
-                password: 'Mobile Task Force Nu-7 Senior Operative Debzii',
-                redirect: '/Nu-7-Dashboard'
-            },
+            "MTF_N7_SrOp_Debzii": {
+                password: "Mobile Task Force Nu-7 Senior Operative Debzii",
+                redirect: "/Nu-7-Dashboard"
+            }
         };
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
             if (users[username] && users[username].password === password) {
-                window.location.href = users[username].redirect || 'https://testurl.com';
+                window.location.href = users[username].redirect || "https://testurl.com";
             } else {
-                alert('ACCESS DENIED: Invalid credentials detected. This incident will be reported to the Record Keeping And Information Security Administration (R.A.I.S.A) And the Internal Security Department (I.S.D).');
+                alert("ACCESS DENIED: Invalid credentials detected. This incident will be reported to R.A.I.S.A and the I.S.D.");
             }
         });
     </script>
